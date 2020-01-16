@@ -1,0 +1,19 @@
+version: '3'
+
+services: 
+    frontend:
+        build: ./frontend-service
+        volumes:
+            - ./frontend-service:/usr/src/app
+        ports:
+            - 5000:80
+        depends_on: 
+            - general-service
+        restart: always
+
+    general-service:
+        build: ./general-service
+        volumes:
+            - ./general-service:/usr/src/app
+        ports:
+            - 5001:80
