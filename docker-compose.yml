@@ -17,3 +17,5 @@ services:
             - ./general-service:/usr/src/app
         ports:
             - 5001:80
+
+            
