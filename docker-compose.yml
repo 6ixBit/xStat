@@ -9,6 +9,7 @@ services:
             - 5000:80
         depends_on: 
             - general-service
+            - player-comparison-service
         restart: always
 
     general-service:
@@ -17,5 +18,15 @@ services:
             - ./general-service:/usr/src/app
         ports:
             - 5001:80
+        restart: always
+
+    player-comparison-service:
+        build: ./player-comparison-service
+        volumes:
+            - ./player-comparison-service:/usr/src/app
+        ports:
+            - 5002:80
+        restart: always
+        
 
             

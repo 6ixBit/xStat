@@ -6,7 +6,7 @@ import dash_html_components as html
 # App Routes
 @app.route('/')
 def index():
-    res = requests.get("http://general-service/api/players")
+    res = requests.get("http://general-service/api/stats/goals/Premier League")
     return res.json()
 
 
@@ -16,7 +16,8 @@ def player_comparison():
     # todo: Pass returned data to dash app
     # todo: Render any additonal tags and return the page to the user 
 
-    return {'Result' : 'You have hit the player comparison endpoint'}
+    res = requests.get("http://player-comparison-service/api/players/Riyad Mahrez")
+    return res.json()
 
 
 # Dash application
