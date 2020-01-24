@@ -1,7 +1,9 @@
 from app import app
 import requests
+
 from dash import Dash
 import dash_html_components as html
+import dash_core_components as dcc
 
 # App Routes
 @app.route('/')
@@ -21,11 +23,38 @@ def player_comparison():
 
 
 # Dash application
+
+# Sample style sheet
+external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+
 dash_app1 = Dash(
     __name__,
     server=app,
-    routes_pathname_prefix='/charts/'
+    routes_pathname_prefix='/charts/',
+    external_stylesheets=external_stylesheets
 )
 
 # Setup layout for dash application
-dash_app1.layout = html.Div("My 1st Dash app")
+dash_app1.layout = html.Div(children=[
+    html.H1(children='xStat'),
+
+    html.Div(children='''
+        A data visualization platform for football player statistics.
+    '''),
+
+    dcc.Graph(
+        id='example-graph',
+        figure={
+            'data': [
+                {'x': [1, 2, 3], 
+                'y': [4, 1, 2], 'type': 'bar', 'name': 'Kevin De Bruyne'},
+
+                {'x': [1, 2, 3], 
+                'y': [2, 4, 5], 'type': 'bar', 'name': 'Mesut Ozil'},
+            ],
+            'layout': {
+                'title': 'Premier League Assists (2017, November)'
+            }
+        }
+    )
+])
