@@ -16,16 +16,16 @@ services:
         build: ./general-service
         volumes:
             - ./general-service:/usr/src/app
-        ports:
-            - 5001:80
+        expose:
+            - "80"
         restart: always
 
     player-comparison-service:
         build: ./player-comparison-service
         volumes:
             - ./player-comparison-service:/usr/src/app
-        ports:
-            - 5002:80
+        expose:
+            - "80"
         restart: always
         
 
