@@ -6,9 +6,10 @@ services:
     - docker
 
 before_script: 
-    - cd frontend-service && pip install -r requirements.txt && cd ..
     - pip install docker-compose
    
 script:
     - docker-compose build
-    - cd frontend-service && python test_microservice_endpoints.py
+    - docker-compose run general-service sh -c "python test_endpoints.py"
+    - docker-compose run player-comparison-service sh -c "python test_endpoints.py"
+    - docker-compose run frontend sh -c "python test_microservice_endpoints.py"
