@@ -8,5 +8,5 @@ services:
 before_script: pip install docker-compose
 
 script:
-    - docker-compose up
-    - docker exec -it xstat_general-service_1 /bin/bash && python test_endpoints.py && exit
+    - docker-compose build
+    - cd frontend-service && python test_microservice_endpoints.py
