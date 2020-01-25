@@ -5,8 +5,10 @@ python:
 services:
     - docker
 
-before_script: pip install docker-compose
-
+before_script: 
+    - cd frontend-service && pip install -r requirements.txt && cd ..
+    - pip install docker-compose
+   
 script:
     - docker-compose build
     - cd frontend-service && python test_microservice_endpoints.py
