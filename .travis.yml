@@ -9,6 +9,6 @@ before_script: pip install docker-compose
 
 script:
     - docker-compose build
-    - cd frontend-service && python test_microservice_endpoints.py && cd ..
-    - cd general-service && python test_endpoints.py && cd ..
-    - cd player-comparison-service && python test_endpoints.py && cd ..
+    - cd frontend-service && venv source/bin/activate && python test_microservice_endpoints.py && deactivate && cd ..
+    - cd general-service && venv source/bin/activate && python test_endpoints.py && deactivate && cd ..
+    - cd player-comparison-service && venv source/bin/activate && python test_endpoints.py && deactivate && cd ..
