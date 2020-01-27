@@ -1,6 +1,8 @@
 ''' Pulls data from api-football.com, parses necessary fields and commits to database - MongoDB Database'''
 from config import Config
 import requests
+import csv
+import pandas as pd
 from pprint import pprint
 
 # All 5 leagues and their respective ids from the API
@@ -62,6 +64,64 @@ def get_player_stats(player_id: int, league="Premier League"):
     player_stats = [ element[index] for index,element in enumerate(players) if element[index]['league'] == league ]
 
     return player_stats
+
+def write_stats_to_csv(player_stat, filename="player_stats.csv"):
+    # Map users passed as arg into dict
+    player = {
+        "player_id" : player_stat[0]['player_id'],
+        "player_name": player_stat[0]['player_name'],
+        "first_name": player_stat[0]['firstname'],
+        "last_name": player_stat[0]['lastname'],
+        "shirt_number": player_stat[0]['number'],
+        "position": player_stat[0]['position'],
+        "age": player_stat[0]['age'],
+        "team_name": player_stat[0]['team_name'],
+        "rating": player_stat[0]['rating'],
+        "nationality": player_stat[0]['nationality'],
+        "height": player_stat[0]['height'],
+        "weight": player_stat[0]['weight'],
+        "competition": player_stat[0]['league'],
+        "season": player_stat[0]['season'],
+        "total_shots": player_stat[0]['shots']['total'],
+        "shots_on_target": player_stat[0]['shots']['on'],
+        "goals": player_stat[0]['goals']['total'],
+        "assists": player_stat[0]['goals']['assists'],
+        "total_passes": player_stat[0]['passes']['total'],
+        "key_passes": player_stat[0]['passes']['key'],
+        "pass_accuracy": player_stat[0]['passes']['accuracy'],
+        "completed_tackles": player_stat[0]['tackles']['total'],
+        "blocks": player_stat[0]['tackles']['blocks'],
+        "interceptions": player_stat[0]['tackles']['interceptions'],
+        "dribble_attempts": player_stat[0]['dribbles']['attempts'],
+        "dribble_success": player_stat[0]['dribbles']['success'],
+        "fouls_drawn": player_stat[0]['fouls']['drawn'],
+        "fouls_commited": player_stat[0]['fouls']['committed'],
+        "yellow_cards": player_stat[0]['cards']['yellow'],
+        "red_cards": player_stat[0]['cards']['red'],
+        "penalty_won": player_stat[0]['penalty']['won'],
+        "penalty_commited": player_stat[0]['penalty']['commited'],
+        "penalty_success": player_stat[0]['penalty']['success'],
+        "penalty_missed": player_stat[0]['penalty']['missed'],
+        "appearences": player_stat[0]['games']['appearences'],
+        "minutes_played": player_stat[0]['games']['minutes_played'],
+        "match_starts": player_stat[0]['games']['lineups'],
+        "subbed_in": player_stat[0]['substitutes']['in'],
+        "subbed_out": player_stat[0]['substitutes']['out'],
+        "benched": player_stat[0]['substitutes']['bench'],
+        "total_duels": player_stat[0]['duels']['total'],
+        "duels_won": player_stat[0]['duels']['won']
+    }
+
+    field_names = [ col for col in player.keys() ]
+
+    with open(filename, mode='w') as csv_file:
+        writer = csv.DictWriter(csv_file, fieldnames=field_names)
+        writer.writeheader()
+
+        writer.writerow(player)
+
+    return pd.read_csv('player_stats.csv').head()
+
     
   
 if __name__ == '__main__':
@@ -69,8 +129,11 @@ if __name__ == '__main__':
     # result = map(grab_teams, leagues.values()) -> RUN grab_teams function for every league
     # pprint(list(result))
 
-    league_id = leagues['Premier League']
-    #pprint(get_teams(league_id))
-    #pprint(get_players_id(50, '2019-2020'))
-    pprint(get_player_stats(644))
+    # team_ids = map(get_teams, leagues.values())
+    # pprint(list(team_ids))
+
+    my_player = get_player_stats(644)
+    print(write_to_csv(my_player))
+
+    
 
