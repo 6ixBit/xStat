@@ -17,18 +17,28 @@ headers = {
     "x-rapidapi-key": Config.RAPID_API_KEY
 }
 
-def grab_teams(url, league_id):
-    ''' Grab all teams from a specific league'''
+
+def grab_teams(league_id):
+    ''' Grab all teams from a specific league
+
+        @param (int) league_id
+        @return (int []) teams    
+    '''
     global headers
-    connect = requests.get(url, headers=headers).json()
+    url = f"https://api-football-v1.p.rapidapi.com/v2/teams/league/{league_id}"
+    response = requests.get(url, headers=headers).json()
 
-    teams = [ value['teams'] for key,value in connect.items() ]
-    return teams
-    # todo: Add name of teams and their assigned ids to a dictionary 
+    teams = [ value['teams'] for key,value in response.items() ]
 
+    # Parse team_ids from each team within the league
+    team_ids = [ element['team_id'] for index, element in enumerate(teams[0]) ]
+       
+    return team_ids
+  
 if __name__ == '__main__':
     # todo: Call function to grab data from API
-    league_id = leagues['Premier League']
-    url = f"https://api-football-v1.p.rapidapi.com/v2/teams/league/{league_id}"
+    # result = map(grab_teams, leagues.values()) -> RUN grab_teams function for every league
+    # pprint(list(result))
 
-    pprint(grab_teams(url, league_id))
+    league_id = leagues['Premier League']
+    pprint(grab_teams(league_id))
