@@ -119,7 +119,6 @@ def write_stats_to_csv(player_stat, filename="player_stats.csv"):
         writer = csv.DictWriter(csv_file, fieldnames=field_names)
         writer.writeheader()
         writer.writerow(player)
-        # writer.writerows(player)
 
     #return pd.read_csv('player_stats.csv').head()
 
@@ -134,16 +133,15 @@ def write_to_db(player_stat):
     print(player.inserted_id)
 
 if __name__ == '__main__':
-    # todo: Call function to grab data from API
-    #team_ids = get_teams(leagues['Premier League']) - Too much data when testing - SWAP when commiting to database
-    team_ids = [46] #46
+    #team_ids = get_teams(leagues['Premier League']) Premier League is done
 
     player_ids = list(map(get_players_id, team_ids))
-    player_ids_pool = [ inner for outer in player_ids for inner in outer ] # Holds pool of player ids from a particular team.
+    player_ids_pool = [ inner for outer in player_ids for inner in outer ] # Pool of player ids from a particular team.
 
     player_stats = list(map(get_player_stats, player_ids_pool))
-    player_stats_pool = [ inner for outer in player_stats for inner in outer ] # Holds JSON of every player of a particular team
+    player_stats_pool = [ inner for outer in player_stats for inner in outer ] # Holds stats of every player of a particular team in JSON
 
+    # Insert each players  stat to database
     for player in player_stats_pool:
         write_to_db(player)
 

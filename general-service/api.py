@@ -1,5 +1,4 @@
 ''' API Endpoints for general-service '''
-
 from flask_restful import Resource, Api
 from flask import Flask
 
@@ -7,6 +6,9 @@ app = Flask(__name__)
 api = Api(app)
 
 class Players(Resource):
+    # @desc Returns the highest goal scorers from a particular league
+    # @route GET /api/stats/goals/:leaguename
+    # @param :leaguename - str
     def get(self, leaguename):
         return {'Success' : 'You have reached the gene service which will consist of the general statistics of players, including their clubs, league etc',
                 'data': leaguename}

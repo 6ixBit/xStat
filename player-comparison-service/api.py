@@ -7,6 +7,9 @@ app = Flask(__name__)
 api = Api(app)
 
 class Players(Resource):
+    # @desc Returns all stat info about a particular player
+    # @route GET /api/players/:playername
+    # @param :playername - str
     def get(self, playername):
         return {'Success' : 'You have reached the player comparison service, which will consist of the general statistics of players, including their clubs, league etc',
                 'data': playername}
