@@ -141,7 +141,7 @@ if __name__ == '__main__':
     player_stats = list(map(get_player_stats, player_ids_pool))
     player_stats_pool = [ inner for outer in player_stats for inner in outer ] # Holds stats of every player of a particular team in JSON
 
-    # Insert each players  stat to database
+    # Insert each players stat to database
     for player in player_stats_pool:
         write_to_db(player)
 
