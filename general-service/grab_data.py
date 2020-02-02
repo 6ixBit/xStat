@@ -129,7 +129,52 @@ def write_to_db(player_stat):
     my_db = my_client['xStat']
     my_collection = my_db['player_stats_general_service']
 
-    player = my_collection.insert_one(player_stat)
+    my_player = {
+        "player_id" : player_stat['player_id'],
+        "player_name": player_stat['player_name'],
+        "first_name": player_stat['firstname'],
+        "last_name": player_stat['lastname'],
+        "shirt_number": player_stat['number'],
+        "position": player_stat['position'],
+        "age": player_stat['age'],
+        "team_name": player_stat['team_name'],
+        "rating": player_stat['rating'],
+        "nationality": player_stat['nationality'],
+        "height": player_stat['height'],
+        "weight": player_stat['weight'],
+        "competition": player_stat['league'],
+        "season": player_stat['season'],
+        "total_shots": player_stat['shots']['total'],
+        "shots_on_target": player_stat['shots']['on'],
+        "goals": player_stat['goals']['total'],
+        "assists": player_stat['goals']['assists'],
+        "total_passes": player_stat['passes']['total'],
+        "key_passes": player_stat['passes']['key'],
+        "pass_accuracy": player_stat['passes']['accuracy'],
+        "completed_tackles": player_stat['tackles']['total'],
+        "blocks": player_stat['tackles']['blocks'],
+        "interceptions": player_stat['tackles']['interceptions'],
+        "dribble_attempts": player_stat['dribbles']['attempts'],
+        "dribble_success": player_stat['dribbles']['success'],
+        "fouls_drawn": player_stat['fouls']['drawn'],
+        "fouls_commited": player_stat['fouls']['committed'],
+        "yellow_cards": player_stat['cards']['yellow'],
+        "red_cards": player_stat['cards']['red'],
+        "penalty_won": player_stat['penalty']['won'],
+        "penalty_commited": player_stat['penalty']['commited'],
+        "penalty_success": player_stat['penalty']['success'],
+        "penalty_missed": player_stat['penalty']['missed'],
+        "appearences": player_stat['games']['appearences'],
+        "minutes_played": player_stat['games']['minutes_played'],
+        "match_starts": player_stat['games']['lineups'],
+        "subbed_in": player_stat['substitutes']['in'],
+        "subbed_out": player_stat['substitutes']['out'],
+        "benched": player_stat['substitutes']['bench'],
+        "total_duels": player_stat['duels']['total'],
+        "duels_won": player_stat['duels']['won']
+    }
+
+    player = my_collection.insert_one(my_player)
     print(player.inserted_id)
 
 if __name__ == '__main__':

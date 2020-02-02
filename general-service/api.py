@@ -10,7 +10,7 @@ class Players(Resource):
     # @route GET /api/stats/goals/:leaguename
     # @param :leaguename - str
     def get(self, leaguename):
-        return {'Success' : 'You have reached the gene service which will consist of the general statistics of players, including their clubs, league etc',
+        return {'Success' : 'You have reached the general service which will consist of the general statistics of players, including their clubs, league etc',
                 'data': leaguename}
 
 api.add_resource(Players, '/api/stats/goals/<string:leaguename>')
