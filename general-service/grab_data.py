@@ -49,7 +49,7 @@ def get_players_id(team_id, season="2019-2020"):
     player_ids = [ element['player_id'] for index, element in enumerate(players[0]) ]
     return player_ids
 
-def get_player_stats(player_id: int, league="Premier League"):
+def get_player_stats(player_id: int, league="Serie A"):
     ''' GET stats for each player and filter by params on link
         @param (644) player_id - Player id of a specific player
         @param ("Premier League") league - What league to filter stats by 
@@ -144,9 +144,11 @@ def write_to_db(player_stat):
         "weight": player_stat['weight'],
         "competition": player_stat['league'],
         "season": player_stat['season'],
+        "captain": player_stat['captain'],
         "total_shots": player_stat['shots']['total'],
         "shots_on_target": player_stat['shots']['on'],
         "goals": player_stat['goals']['total'],
+        "goals_conceded": player_stat['goals']['conceded'],
         "assists": player_stat['goals']['assists'],
         "total_passes": player_stat['passes']['total'],
         "key_passes": player_stat['passes']['key'],
@@ -164,6 +166,7 @@ def write_to_db(player_stat):
         "penalty_commited": player_stat['penalty']['commited'],
         "penalty_success": player_stat['penalty']['success'],
         "penalty_missed": player_stat['penalty']['missed'],
+        "penalty_saved": player_stat['penalty']['saved'],
         "appearences": player_stat['games']['appearences'],
         "minutes_played": player_stat['games']['minutes_played'],
         "match_starts": player_stat['games']['lineups'],
@@ -178,7 +181,7 @@ def write_to_db(player_stat):
     print(player.inserted_id)
 
 if __name__ == '__main__':
-    #team_ids = get_teams(leagues['Premier League']) Premier League is done
+    #team_ids = get_teams(leagues["Seria A"]) # PL, Bundesliga, La Liga, Ligue 1, Seri
 
     player_ids = list(map(get_players_id, team_ids))
     player_ids_pool = [ inner for outer in player_ids for inner in outer ] # Pool of player ids from a particular team.

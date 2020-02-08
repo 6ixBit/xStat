@@ -10,6 +10,10 @@ class Players(Resource):
     # @route GET /api/stats/goals/:leaguename
     # @param :leaguename - str
     def get(self, leaguename):
+        ''' 
+        GET Premier League players - Swap competition with league name
+        { $and: [ {competition: "Premier League"}, {season: "2019-2020"}, {goals: {$nin: ['null']}, }  ]}
+         '''
         return {'Success' : 'You have reached the general service which will consist of the general statistics of players, including their clubs, league etc',
                 'data': leaguename}
 
