@@ -1,7 +1,14 @@
 ''' API Endpoints for general-service '''
 from flask_restful import Resource, Api
-from flask import Flask
+from flask import Flask, Request
+import json
+from pprint import pprint
 
+# Import DB Models
+#sys.path.append(sys.path[0] + '/Models')
+from Models.players import get_players_frm_league
+
+# App instances and config
 app = Flask(__name__)
 api = Api(app)
 
@@ -11,11 +18,13 @@ class Players(Resource):
     # @param :leaguename - str
     def get(self, leaguename):
         ''' 
-        GET Premier League players - Swap competition with league name
-        { $and: [ {competition: "Premier League"}, {season: "2019-2020"}, {goals: {$nin: ['null']}, }  ]}
-         '''
-        return {'Success' : 'You have reached the general service which will consist of the general statistics of players, including their clubs, league etc',
-                'data': leaguename}
+        GET League players based on league name
+        '''       
+        try:
+            players = get_players_frm_league(leaguename) if leaguename else {"Failed": "No Resource provided"}
+            return players,200 if players == [] else 404
+        except: 
+            return {'Error' : "Failed to return requested data"}, 400
 
 api.add_resource(Players, '/api/stats/goals/<string:leaguename>')
 

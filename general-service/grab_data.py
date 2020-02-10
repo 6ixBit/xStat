@@ -10,7 +10,7 @@ import pymongo
 leagues = {
     "Premier League" : 524,
     "La Liga" : 775,
-    "Seria A" : 891,
+    "Serie A" : 891,
     "Bundesliga" : 754,
     "Ligue 1" : 525
 }
