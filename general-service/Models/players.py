@@ -1,4 +1,6 @@
 ''' Model representation for player database interactions'''
+
+# Third party imports
 from pymongo import MongoClient
 from pprint import pprint
 
@@ -9,7 +11,8 @@ collection = db['player_stats_general_service']
 
 def get_players_frm_league(league:str, cur_season="2019-2020"):
     ''' 
-    @desc Returns all info about a player from a specific league, filtered by a particular season
+    @desc Returns all info about a player from a specific league, filtered by a particular season.
+    @return [] list
     '''
     received_players = collection.find(
         {'$and' : [

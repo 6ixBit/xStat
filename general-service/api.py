@@ -1,12 +1,13 @@
 ''' API Endpoints for general-service '''
+
+# Third party imports 
 from flask_restful import Resource, Api
 from flask import Flask, Request
 import json
 from pprint import pprint
 
-# Import DB Models
-#sys.path.append(sys.path[0] + '/Models')
-from Models.players import get_players_frm_league
+# Local imports
+from pipeline import filter_top_scorers
 
 # App instances and config
 app = Flask(__name__)
@@ -21,11 +22,12 @@ class Players(Resource):
         GET League players based on league name
         '''       
         try:
-            players = get_players_frm_league(leaguename) if leaguename else {"Failed": "No Resource provided"}
+            players = filter_top_scorers(leaguename) 
             return players,200 if players == [] else 404
         except: 
             return {'Error' : "Failed to return requested data"}, 400
 
+# Routes for API
 api.add_resource(Players, '/api/stats/goals/<string:leaguename>')
 
 if __name__ == '__main__':
