@@ -31,5 +31,5 @@ class Players(Resource):
 api.add_resource(Players, '/api/stats/goals/<string:leaguename>')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80, debug=True)
+    app.run(host='0.0.0.0', port=81, debug=True)
 
