@@ -34,7 +34,9 @@ def get_all_players(season="2019-2020"):
     @desc Returns all players from database
     @return [{}] list of dicts
     '''
-    received_players = collection.find({})
+    received_players = collection.find({
+        
+    })
 
     players = []
     for player in received_players:
