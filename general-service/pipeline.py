@@ -1,4 +1,5 @@
 ''' Processing pipeline for data pulled from database '''
+
 # Third party imports
 import pandas as pd
 from pprint import pprint
@@ -12,27 +13,31 @@ def filter_top_scorers(league: str):
      @desc Cleans and sorts the data passed to it and returns it in its required format
      @return Returns 
     '''
-    # Pull players from database
-    players = get_players_frm_league(f"{league}")
-    df = pd.DataFrame(players)
+    try:
+        # Pull players from database
+        players = get_players_frm_league(f"{league}")
+        df = pd.DataFrame(players)
 
-    # Clean data and only include the following columns
-    columns = ['player_name', 'team_name', 'competition', 'age', \
-             'goals', 'minutes_played', 'match_starts', 'total_shots', 'shots_on_target']
-    data = df[columns]
+        # Clean data and only include the following columns
+        columns = ['player_name', 'team_name', 'competition', 'age', \
+                  'goals', 'minutes_played', 'match_starts', 'total_shots', 'shots_on_target']
+        data = df[columns]
 
-    # Sort rows by goals so that the dataframe can be ordered
-    sorted_data = data.sort_values(by='goals', ascending=False)
+        # Sort rows by goals so that the dataframe can be ordered
+        sorted_data = data.sort_values(by='goals', ascending=False)
 
-    # Calculate per 90 columns and add to dataframe 
-    sorted_data['goals_per90'] = sorted_data.apply(lambda x: calc_per_90(x['goals'], x['minutes_played']), axis=1)
-    sorted_data['shots_per90'] = sorted_data.apply(lambda x: calc_per_90(x['total_shots'], x['minutes_played']), axis=1)
-    sorted_data['shots_on_target_p90'] = sorted_data.apply(lambda x: calc_per_90(x['shots_on_target'], x['minutes_played']), axis=1)
+        # Calculate per 90 columns and add to dataframe 
+        sorted_data['goals_per90'] = sorted_data.apply(lambda x: calc_per_90(x['goals'], x['minutes_played']), axis=1)
+        sorted_data['shots_per90'] = sorted_data.apply(lambda x: calc_per_90(x['total_shots'], x['minutes_played']), axis=1)
+        sorted_data['shots_on_target_p90'] = sorted_data.apply(lambda x: calc_per_90(x['shots_on_target'], x['minutes_played']), axis=1)
 
-    #TODO: Fix JSON output before returning it
-    #json_plyrs = sorted_data.to_json(orient='index')
-    return sorted_data.head(10)
+        # Supress warnings
+        sorted_data.is_copy = False
 
+        return sorted_data.head(10)
+    except:
+      return "Failed to load data", 400
+    
 def filter_pass_accuracy(league: str):
     '''
     Perfectionist 🎯 & key_passes = Talisman ⚙️
@@ -57,6 +62,9 @@ def filter_pass_accuracy(league: str):
 
     finalised_data = sorted_data.sort_values(by='accuratePasses_per90', ascending=False)
 
+    # Supress warnings
+    finalised_data.is_copy = False
+
     return finalised_data.head(10)
 
 def filter_dribbles_completed(league: str):
@@ -78,6 +86,9 @@ def filter_dribbles_completed(league: str):
 
     # Calculate per 90 columns and add to dataframe 
     sorted_data['dribbleSuccess_per90'] = sorted_data.apply(lambda x: calc_per_90(x['dribble_success'], x['minutes_played']), axis=1)
+
+    # Suppress warnings
+    sorted_data.is_copy = False
 
     return sorted_data.head(10)
 
@@ -103,6 +114,10 @@ def filter_tackles_completed(league:str):
 
     # Sort rows by pass accuracy so that the dataframe can be ordered
     finalised_data = data.sort_values(by='tacklesCompleted_per90', ascending=False)
+
+    # Suppress warnings
+    finalised_data.is_copy = False
+
     return finalised_data.head(10)
 
 def filter_all_stats():
@@ -168,20 +183,20 @@ def filter_all_stats():
     data['interceptions_per90'] = data.apply(lambda x: calc_per_90(x['interceptions'], x['minutes_played']), axis=1)
     data['foulsCommited_per90'] = data.apply(lambda x: calc_per_90(x['fouls_commited'], x['minutes_played']), axis=1)
     data['foulsDrawn_per90'] = data.apply(lambda x: calc_per_90(x['fouls_drawn'], x['minutes_played']), axis=1)
+
+    # Supress warnings
+    data.is_copy = False
     
-    #TODO: Fix warning bug that Pandas returns Fix = dfa.is_copy = False
     return data.head()
 
 def calc_per_90(stat, minutes_played):
     '''
     @desc Returns the per 90 value of a stat passed to 2 decimal places
     '''
-    # To avoid innaccurate values
-    if stat < 1:
-        return 0
-    if minutes_played < 1:
+    # To avoid potentisl redundant values
+    if stat < 1 or minutes_played < 1:
         return 0
 
     return round((stat / minutes_played) * 90, 2)
 
-print(filter_all_stats())
+# print(filter_all_stats())
