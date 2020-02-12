@@ -7,15 +7,19 @@ import json
 from pprint import pprint
 
 # Local imports
-from pipeline import filter_top_scorers
+from pipeline import filter_top_scorers, \
+filter_pass_accuracy,\
+filter_dribbles_completed,\
+filter_tackles_completed, \
+filter_all_stats
 
 # App instances and config
 app = Flask(__name__)
-api = Api(app, catch_all_404s=True)
+api = Api(app, catch_all_404s=True, prefix='/api/v1')
 
-class Players(Resource):
+class Goals(Resource):
     # @desc Returns the highest goal scorers from a particular league in descending order
-    # @route GET /api/stats/goals/:leaguename
+    # @route GET /api/v1/stats/goals/:leaguename
     # @param :leaguename - name of league the players to search
     def get(self, leaguename):     
         try:
@@ -24,9 +28,57 @@ class Players(Resource):
         except: 
             return {'Error' : "Failed to return requested data"}, 400
 
+class Passing(Resource):
+    # @desc Returns players with the highest passing stats
+    # @route GET /api/v1/stats/goals/:leaguename
+    # @param :leaguename - name of league the players to search
+    def get(self, leaguename):     
+        try:
+            players = filter_pass_accuracy(leaguename) 
+            return players,200 
+        except: 
+            return {'Error' : "Failed to return requested data"}, 400
+
+class Dribbling(Resource):
+    # @desc Returns players with the highest dribbling stats
+    # @route GET /api/v1/stats/dribbles/:leaguename
+    # @param :leaguename - name of league the players to search
+    def get(self, leaguename):     
+        try:
+            players = filter_dribbles_completed(leaguename) 
+            return players,200 
+        except: 
+            return {'Error' : "Failed to return requested data"}, 400
+
+class Tackling(Resource):
+    # @desc Returns players with the highest tackling stats
+    # @route GET /api/v1/stats/tackles/:leaguename
+    # @param :leaguename - name of league the players to search
+    def get(self, leaguename):     
+        try:
+            players = filter_tackles_completed(leaguename) 
+            return players,200 
+        except: 
+            return {'Error' : "Failed to return requested data"}, 400
+
+class Players(Resource):
+    # @desc Returns all players with a combination of all calcluated stats
+    # @route GET /api/v1/stats/
+    def get(self):     
+        try:
+            players = filter_all_stats() 
+            return players, 200 
+        except: 
+            return {'Error' : "Failed to return requested data"}, 400
+
+
 # Routes for API
-api.add_resource(Players, '/api/stats/goals/<string:leaguename>')
+api.add_resource(Goals, '/stats/goals/<string:leaguename>')
+api.add_resource(Passing, '/stats/passes/<string:leaguename>')
+api.add_resource(Dribbling, '/stats/dribbles/<string:leaguename>')
+api.add_resource(Tackling, '/stats/tackles/<string:leaguename>')
+api.add_resource(Players, '/stats')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80, debug=True)
+    app.run(host='0.0.0.0', port=81, debug=True)
 

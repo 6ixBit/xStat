@@ -8,11 +8,16 @@ from pprint import pprint
 # Local application imports
 from Models.players import get_players_frm_league, get_all_players
 
+#Supress Panda warnings
+pd.options.mode.chained_assignment = None
+
+#TODO: Limit output of each function to 50 using a param to avoid it being static
+
 def filter_top_scorers(league: str):
     '''
     Most goals - Hitman ⚔️
      @desc Cleans and sorts the data passed to it and returns it in its required format
-     @return Returns 
+     @return [{}] - list of dict objects for each row
     '''
     try:
         # Pull players from database
@@ -32,9 +37,6 @@ def filter_top_scorers(league: str):
         sorted_data['shots_per90'] = sorted_data.apply(lambda x: calc_per_90(x['total_shots'], x['minutes_played']), axis=1)
         sorted_data['shots_on_target_p90'] = sorted_data.apply(lambda x: calc_per_90(x['shots_on_target'], x['minutes_played']), axis=1)
 
-        # Supress warnings
-        sorted_data.is_copy = False
-
         # Export as dictionary object to allow for JSON parsing
         result = sorted_data.to_dict(orient='records')
         return result
@@ -45,6 +47,7 @@ def filter_pass_accuracy(league: str):
     '''
     Perfectionist 🎯 & key_passes = Talisman ⚙️
     @desc Cleans and sorts the data by those with the highest pass accuracy
+    @return [{}] - list of dict objects for each row
     '''
       # Pull players from database
     players = get_players_frm_league(f"{league}")
@@ -65,9 +68,6 @@ def filter_pass_accuracy(league: str):
 
     finalised_data = sorted_data.sort_values(by='accuratePasses_per90', ascending=False)
 
-    # Supress warnings
-    finalised_data.is_copy = False
-
     # Export as dictionary object to allow for JSON parsing
     result = finalised_data.to_dict(orient='records')
     return result
@@ -76,6 +76,7 @@ def filter_dribbles_completed(league: str):
     '''
     The magician 🎩
     @desc Cleans and sorts the data by those with the most dribbles completed 
+    @return [{}] - list of dict objects for each row
     '''
       # Pull players from database
     players = get_players_frm_league(f"{league}")
@@ -92,9 +93,6 @@ def filter_dribbles_completed(league: str):
     # Calculate per 90 columns and add to dataframe 
     sorted_data['dribbleSuccess_per90'] = sorted_data.apply(lambda x: calc_per_90(x['dribble_success'], x['minutes_played']), axis=1)
 
-    # Suppress warnings
-    sorted_data.is_copy = False
-
     # Export as dictionary object to allow for JSON parsing
     result = sorted_data.to_dict(orient='records')
     return result
@@ -103,6 +101,7 @@ def filter_tackles_completed(league: str):
     '''
     King of tackles 👑
     @desc Cleans and sorts the data by those with the most tackles completed
+    @return [{}] - list of dict objects for each row
     '''
       # Pull players from database
     players = get_players_frm_league(f"{league}")
@@ -122,9 +121,6 @@ def filter_tackles_completed(league: str):
     # Sort rows by pass accuracy so that the dataframe can be ordered
     finalised_data = data.sort_values(by='tacklesCompleted_per90', ascending=False)
 
-    # Suppress warnings
-    finalised_data.is_copy = False
-
     # Export as dictionary object to allow for JSON parsing
     result = finalised_data.to_dict(orient='records')
     return result
@@ -132,6 +128,7 @@ def filter_tackles_completed(league: str):
 def filter_all_stats():
     '''
     @desc Will bind all stats for every player and have a p90 column.
+    @return [{}] - list of dict objects for each row
     '''
     # Pull players from database
     players = get_all_players()
@@ -193,9 +190,6 @@ def filter_all_stats():
     data['foulsCommited_per90'] = data.apply(lambda x: calc_per_90(x['fouls_commited'], x['minutes_played']), axis=1)
     data['foulsDrawn_per90'] = data.apply(lambda x: calc_per_90(x['fouls_drawn'], x['minutes_played']), axis=1)
 
-    # Suppress warnings
-    data.is_copy = False
-
     # Export as dictionary object to allow for JSON parsing
     result = data.to_dict(orient='records')
     return result
@@ -203,6 +197,7 @@ def filter_all_stats():
 def calc_per_90(stat, minutes_played):
     '''
     @desc Returns the per 90 value of a stat passed to 2 decimal places
+    @return int value to 2 decimal places
     '''
     # To avoid potentisl redundant values
     if stat < 1 or minutes_played < 1:
