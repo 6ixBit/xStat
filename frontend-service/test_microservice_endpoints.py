@@ -10,11 +10,11 @@ class ApiTestCase(unittest.TestCase):
         res = tester.get('/', content_type='application/json')
         self.assertEqual(res.status_code, 200)
 
-    # def test_charts_route(self):
-    #     '''Endpoint should return a 200 on request'''
-    #     tester = app.test_client(self)
-    #     res = tester.get('/charts', content_type='application/json')
-    #     self.assertEqual(res.status_code, 200)
+    def test_charts_route(self):
+        '''Endpoint should return a 200 on request'''
+        tester = app.test_client(self)
+        res = tester.get('/charts', content_type='application/json')
+        self.assertEqual(res.status_code, 200)
 
     def test_player_comparison_endpoint(self):
         '''Endpoint should return a 200 on request'''

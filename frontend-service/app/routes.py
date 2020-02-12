@@ -14,15 +14,13 @@ def index():
 
 @app.route('/player-comparison')
 def player_comparison():
-    # todo: Make request to /players service
-    # todo: Pass returned data to dash app
-    # todo: Render any additonal tags and return the page to the user 
+    # TODO: Make request to /players service
+    # TODO: Pass returned data to dash app
+    # TODO: Render any additonal tags and return the page to the user 
 
     res = requests.get("http://player-comparison-service/api/players/Riyad Mahrez")
     return res.json()
 
-
-# Dash application
 
 # Sample style sheet
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']

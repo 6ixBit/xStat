@@ -169,9 +169,8 @@ def filter_all_stats():
     data['foulsCommited_per90'] = data.apply(lambda x: calc_per_90(x['fouls_commited'], x['minutes_played']), axis=1)
     data['foulsDrawn_per90'] = data.apply(lambda x: calc_per_90(x['fouls_drawn'], x['minutes_played']), axis=1)
     
-    #TODO: Fix warning bug that Pandas returns
+    #TODO: Fix warning bug that Pandas returns Fix = dfa.is_copy = False
     return data.head()
-
 
 def calc_per_90(stat, minutes_played):
     '''
@@ -182,7 +181,7 @@ def calc_per_90(stat, minutes_played):
         return 0
     if minutes_played < 1:
         return 0
-    return round((stat / minutes_played) * 90, 2)
 
+    return round((stat / minutes_played) * 90, 2)
 
 print(filter_all_stats())
