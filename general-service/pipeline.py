@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 ''' Processing pipeline for data pulled from database '''
 
 # Third party imports
@@ -34,7 +35,9 @@ def filter_top_scorers(league: str):
         # Supress warnings
         sorted_data.is_copy = False
 
-        return sorted_data.head(10)
+        # Export as dictionary object to allow for JSON parsing
+        result = sorted_data.to_dict(orient='records')
+        return result
     except:
       return "Failed to load data", 400
     
@@ -65,7 +68,9 @@ def filter_pass_accuracy(league: str):
     # Supress warnings
     finalised_data.is_copy = False
 
-    return finalised_data.head(10)
+    # Export as dictionary object to allow for JSON parsing
+    result = finalised_data.to_dict(orient='records')
+    return result
 
 def filter_dribbles_completed(league: str):
     '''
@@ -81,7 +86,7 @@ def filter_dribbles_completed(league: str):
              'dribble_attempts', 'dribble_success', 'minutes_played', 'match_starts']
     data = df[columns]
 
-      # Sort rows by pass accuracy so that the dataframe can be ordered
+    # Sort rows by pass accuracy so that the dataframe can be ordered
     sorted_data = data.sort_values(by='dribble_success', ascending=False)
 
     # Calculate per 90 columns and add to dataframe 
@@ -90,9 +95,11 @@ def filter_dribbles_completed(league: str):
     # Suppress warnings
     sorted_data.is_copy = False
 
-    return sorted_data.head(10)
+    # Export as dictionary object to allow for JSON parsing
+    result = sorted_data.to_dict(orient='records')
+    return result
 
-def filter_tackles_completed(league:str):
+def filter_tackles_completed(league: str):
     '''
     King of tackles 👑
     @desc Cleans and sorts the data by those with the most tackles completed
@@ -118,7 +125,9 @@ def filter_tackles_completed(league:str):
     # Suppress warnings
     finalised_data.is_copy = False
 
-    return finalised_data.head(10)
+    # Export as dictionary object to allow for JSON parsing
+    result = finalised_data.to_dict(orient='records')
+    return result
 
 def filter_all_stats():
     '''
@@ -184,10 +193,12 @@ def filter_all_stats():
     data['foulsCommited_per90'] = data.apply(lambda x: calc_per_90(x['fouls_commited'], x['minutes_played']), axis=1)
     data['foulsDrawn_per90'] = data.apply(lambda x: calc_per_90(x['fouls_drawn'], x['minutes_played']), axis=1)
 
-    # Supress warnings
+    # Suppress warnings
     data.is_copy = False
-    
-    return data.head()
+
+    # Export as dictionary object to allow for JSON parsing
+    result = data.to_dict(orient='records')
+    return result
 
 def calc_per_90(stat, minutes_played):
     '''
@@ -199,4 +210,3 @@ def calc_per_90(stat, minutes_played):
 
     return round((stat / minutes_played) * 90, 2)
 
-# print(filter_all_stats())
