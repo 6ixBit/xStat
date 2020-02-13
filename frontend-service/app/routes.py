@@ -8,7 +8,7 @@ import dash_core_components as dcc
 # App Routes
 @app.route('/')
 def index():
-    res = requests.get("http://general-service/api/stats/goals/Premier League")
+    res = requests.get("http://general-service/api/v1/stats/goals/Premier League")
     return res.json()
 
 

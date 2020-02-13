@@ -6,7 +6,7 @@ import pandas as pd
 from pprint import pprint
 
 # Local application imports
-from Models.players import get_players_frm_league, get_all_players
+from src.api.Models.players import get_players_frm_league, get_all_players
 
 #Supress Panda warnings
 pd.options.mode.chained_assignment = None

@@ -2,20 +2,20 @@
 
 # Third party imports 
 from flask_restful import Resource, Api
-from flask import Flask, Request
+from flask import Flask, Request, Blueprint
 import json
 from pprint import pprint
 
 # Local imports
-from pipeline import filter_top_scorers, \
+from src.api.Scripts.pipeline import filter_top_scorers, \
 filter_pass_accuracy,\
 filter_dribbles_completed,\
 filter_tackles_completed, \
 filter_all_stats
 
 # App instances and config
-app = Flask(__name__)
-api = Api(app, catch_all_404s=True, prefix='/api/v1')
+mod = Blueprint('api', __name__)
+api = Api(mod, catch_all_404s=True, prefix='/api/v1')
 
 class Goals(Resource):
     # @desc Returns the highest goal scorers from a particular league in descending order
@@ -71,7 +71,6 @@ class Players(Resource):
         except: 
             return {'Error' : "Failed to return requested data"}, 400
 
-
 # Routes for API
 api.add_resource(Goals, '/stats/goals/<string:leaguename>')
 api.add_resource(Passing, '/stats/passes/<string:leaguename>')
@@ -79,6 +78,4 @@ api.add_resource(Dribbling, '/stats/dribbles/<string:leaguename>')
 api.add_resource(Tackling, '/stats/tackles/<string:leaguename>')
 api.add_resource(Players, '/stats')
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=81, debug=True)
 

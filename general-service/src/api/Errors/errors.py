@@ -4,7 +4,7 @@
 import json
 
 # Local imports
-from api import app
+from src import app
 
 @app.errorhandler(404)
 def resourse_not_found(error):

@@ -10,6 +10,5 @@ before_script:
    
 script:
     - docker-compose build
-    - docker-compose run general-service sh -c "python test_endpoints.py"
     - docker-compose run player-comparison-service sh -c "python test_endpoints.py"
     - docker-compose run frontend sh -c "python test_microservice_endpoints.py"
