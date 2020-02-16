@@ -3,11 +3,11 @@
 # Thid party imports
 from flask import Flask, Blueprint
 
-# Local imports
-from src.api.routes import mod as mod_api
-
 # Setup application instance
 app = Flask(__name__)
+
+# Local imports
+from src.api.routes import mod as mod_api
 
 # Register blueprint(s)
 app.register_blueprint(mod_api)
