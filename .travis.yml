@@ -9,6 +9,9 @@ before_script:
     - pip install docker-compose
    
 script:
-    - docker-compose build
-    - docker-compose run player-comparison-service sh -c "python test_endpoints.py"
-    - docker-compose run frontend sh -c "python test_microservice_endpoints.py"
+    #- docker-compose build
+    #- docker-compose run player-comparison-service sh -c "python /src/Tests/test_endpoints.py"
+   # - docker-compose run frontend sh -c "python test_microservice_endpoints.py"
+
+
+    

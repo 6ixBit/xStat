@@ -1,5 +1,5 @@
 import unittest
-from api import app
+from src import app
 
 class ApiTestCase(unittest.TestCase):
     '''Test cases for endpoints on /player-comparison service'''
