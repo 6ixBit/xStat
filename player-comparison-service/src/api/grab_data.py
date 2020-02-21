@@ -51,7 +51,7 @@ def get_players_id(team_id, season="2019-2020"):
     player_ids = [ element['player_id'] for index, element in enumerate(players[0]) ]
     return player_ids
 
-def get_player_stats(player_id: int, league="Serie A"):
+def get_player_stats(player_id: int, league="Premier League"):
     ''' GET stats for each player and filter by params on link
         @param (644) player_id - Player id of a specific player
         @param ("Premier League") league - What league to filter stats by 
@@ -82,7 +82,7 @@ def get_player_league_stats(team_id:int, competition:str = "Premier League"):
     # A team can have multiple competitions, parse result and return competition param passed
     league_stats = [league for league in response if league['name'] == competition]
 
-    return league_stats
+    return league_stats[0]
 
 def get_player_team_stats(team_id):
     '''
@@ -92,7 +92,7 @@ def get_player_team_stats(team_id):
     global headers
 
     url = f"https://api-football-v1.p.rapidapi.com/v2/teams/team/{team_id}"
-    response = requests.get(url, headers=headers).json()['data']['api']['teams'][0]
+    response = requests.get(url, headers=headers).json()['api']['teams']
 
     # Clean data and return necessary fields
     team_stats = {
@@ -105,7 +105,6 @@ def get_player_team_stats(team_id):
         'stadia_capacity': response[0]['venue_capacity'],
         'stadia_city': response[0]['venue_city']
     }
-    #TODO: Return only one response object rather than multiple that response currently does now
     return team_stats
     
 def submit_to_db(player_stat):
@@ -120,4 +119,5 @@ def submit_to_db(player_stat):
 
 
 if __name__ == '__main__':
-    pprint(get_player_league_stats(50))
+    #pprint(get_player_league_stats(50))
+    pprint(get_players_id(50))

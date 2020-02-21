@@ -18,6 +18,5 @@ class Players(Resource):
         return {'Success' : 'You have reached the player comparison service, which will consist of the general statistics of players, including their clubs, league etc',
                 'data': playername}
 
-
 # Add endpoiints to API instance
 api.add_resource(Players, '/players/<string:playername>')
