@@ -4,8 +4,11 @@
 from pymongo import MongoClient
 from pprint import pprint
 
+# Local imports
+from src.api.config import Config
+
 # Database config
-client = MongoClient('mongodb+srv://hamza:Sierra123@zeus-uu6gn.mongodb.net/test?retryWrites=true&w=majority')
+client = MongoClient(Config.MONGO_URL)
 db = client['xStat']
 collection = db['player_stats_general_service']
 

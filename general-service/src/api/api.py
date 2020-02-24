@@ -15,7 +15,7 @@ filter_all_stats
 
 # App instances and config
 mod = Blueprint('api', __name__)
-api = Api(mod, catch_all_404s=True, prefix='/api/v1')
+api = Api(mod, prefix='/api/v1')
 
 class Goals(Resource):
     # @desc Returns the highest goal scorers from a particular league in descending order
@@ -24,18 +24,18 @@ class Goals(Resource):
     def get(self, leaguename):     
         try:
             players = filter_top_scorers(leaguename) 
-            return players,200 
+            return players, 200 
         except: 
             return {'Error' : "Failed to return requested data"}, 400
 
 class Passing(Resource):
     # @desc Returns players with the highest passing stats
-    # @route GET /api/v1/stats/goals/:leaguename
+    # @route GET /api/v1/stats/passes/:leaguename
     # @param :leaguename - name of league the players to search
     def get(self, leaguename):     
         try:
             players = filter_pass_accuracy(leaguename) 
-            return players,200 
+            return players, 200 
         except: 
             return {'Error' : "Failed to return requested data"}, 400
 

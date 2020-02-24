@@ -4,46 +4,45 @@
 # Third party imports
 import pandas as pd
 from pprint import pprint
+from flask import make_response,jsonify
 
 # Local application imports
 from src.api.Models.players import get_players_frm_league, get_all_players
 
-#Supress Panda warnings
-pd.options.mode.chained_assignment = None
-
 #TODO: Limit output of each function to 50 using a param to avoid it being static
 
-def filter_top_scorers(league: str):
+def filter_top_scorers(league: str, numbOfResults=30):
     '''
-    Most goals - Hitman ⚔️
+     Most goals - Hitman ⚔️
      @desc Cleans and sorts the data passed to it and returns it in its required format
      @return [{}] - list of dict objects for each row
     '''
-    try:
-        # Pull players from database
-        players = get_players_frm_league(f"{league}")
-        df = pd.DataFrame(players)
+    # Pull players from database
+    players = get_players_frm_league(f"{league}")
+    df = pd.DataFrame(players)
 
-        # Clean data and only include the following columns
-        columns = ['player_name', 'team_name', 'competition', 'age', \
-                  'goals', 'minutes_played', 'match_starts', 'total_shots', 'shots_on_target']
-        data = df[columns]
+    # Clean data and only include the following columns
+    columns = ['player_name', 'team_name', 'competition', 'age', \
+                'goals', 'minutes_played', 'match_starts', 'total_shots', 'shots_on_target']
+    data = df[columns]
 
-        # Sort rows by goals so that the dataframe can be ordered
-        sorted_data = data.sort_values(by='goals', ascending=False)
+    # Sort rows by goals so that the dataframe can be ordered
+    sorted_data = data.sort_values(by='goals', ascending=False)
 
-        # Calculate per 90 columns and add to dataframe 
-        sorted_data['goals_per90'] = sorted_data.apply(lambda x: calc_per_90(x['goals'], x['minutes_played']), axis=1)
-        sorted_data['shots_per90'] = sorted_data.apply(lambda x: calc_per_90(x['total_shots'], x['minutes_played']), axis=1)
-        sorted_data['shots_on_target_p90'] = sorted_data.apply(lambda x: calc_per_90(x['shots_on_target'], x['minutes_played']), axis=1)
+    # Calculate per 90 columns and add to dataframe 
+    sorted_data['goals_per90'] = sorted_data.apply(lambda x: calc_per_90(x['goals'], x['minutes_played']), axis=1)
+    sorted_data['shots_per90'] = sorted_data.apply(lambda x: calc_per_90(x['total_shots'], x['minutes_played']), axis=1)
+    sorted_data['shots_on_target_p90'] = sorted_data.apply(lambda x: calc_per_90(x['shots_on_target'], x['minutes_played']), axis=1)
 
-        # Export as dictionary object to allow for JSON parsing
-        result = sorted_data.to_dict(orient='records')
-        return result
-    except:
-      return "Failed to load data", 400
-    
-def filter_pass_accuracy(league: str):
+    # Limit results returned
+    sorted_data = sorted_data.head(numbOfResults)
+
+    # Export as dictionary object to allow for JSON parsing
+    result = sorted_data.to_dict(orient='records')
+
+    return result
+
+def filter_pass_accuracy(league: str, numbOfResults=30):
     '''
     Perfectionist 🎯 & key_passes = Talisman ⚙️
     @desc Cleans and sorts the data by those with the highest pass accuracy
@@ -66,13 +65,16 @@ def filter_pass_accuracy(league: str):
     sorted_data['accuratePasses_per90'] = sorted_data.apply(lambda x: calc_per_90(x['total_passes'], x['minutes_played']), axis=1)
     sorted_data['keyPasses_per90'] = sorted_data.apply(lambda x: calc_per_90(x['key_passes'], x['minutes_played']), axis=1)
 
+     # Limit results returned
+    sorted_data = sorted_data.head(numbOfResults)
+
     finalised_data = sorted_data.sort_values(by='accuratePasses_per90', ascending=False)
 
     # Export as dictionary object to allow for JSON parsing
     result = finalised_data.to_dict(orient='records')
     return result
 
-def filter_dribbles_completed(league: str):
+def filter_dribbles_completed(league: str, numbOfResults=30):
     '''
     The magician 🎩
     @desc Cleans and sorts the data by those with the most dribbles completed 
@@ -93,11 +95,14 @@ def filter_dribbles_completed(league: str):
     # Calculate per 90 columns and add to dataframe 
     sorted_data['dribbleSuccess_per90'] = sorted_data.apply(lambda x: calc_per_90(x['dribble_success'], x['minutes_played']), axis=1)
 
+     # Limit results returned
+    sorted_data = sorted_data.head(numbOfResults)
+
     # Export as dictionary object to allow for JSON parsing
     result = sorted_data.to_dict(orient='records')
     return result
 
-def filter_tackles_completed(league: str):
+def filter_tackles_completed(league: str, numbOfResults=30):
     '''
     King of tackles 👑
     @desc Cleans and sorts the data by those with the most tackles completed
@@ -121,11 +126,14 @@ def filter_tackles_completed(league: str):
     # Sort rows by pass accuracy so that the dataframe can be ordered
     finalised_data = data.sort_values(by='tacklesCompleted_per90', ascending=False)
 
+    # Limit results returned
+    finalised_data = data.head(numbOfResults)
+
     # Export as dictionary object to allow for JSON parsing
     result = finalised_data.to_dict(orient='records')
     return result
 
-def filter_all_stats():
+def filter_all_stats(numbOfResults=25):
     '''
     @desc Will bind all stats for every player and have a p90 column.
     @return [{}] - list of dict objects for each row
@@ -190,6 +198,9 @@ def filter_all_stats():
     data['foulsCommited_per90'] = data.apply(lambda x: calc_per_90(x['fouls_commited'], x['minutes_played']), axis=1)
     data['foulsDrawn_per90'] = data.apply(lambda x: calc_per_90(x['fouls_drawn'], x['minutes_played']), axis=1)
 
+    # Limit results returned
+    data = data.head(numbOfResults)
+    
     # Export as dictionary object to allow for JSON parsing
     result = data.to_dict(orient='records')
     return result
@@ -199,6 +210,9 @@ def calc_per_90(stat, minutes_played):
     @desc Returns the per 90 value of a stat passed to 2 decimal places
     @return int value to 2 decimal places
     '''
+    if type(stat) != int or type(minutes_played) != int:
+        return 0
+
     # To avoid potentisl redundant values
     if stat < 1 or minutes_played < 1:
         return 0

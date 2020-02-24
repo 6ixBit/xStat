@@ -28,6 +28,15 @@ class ApiTestCase(unittest.TestCase):
         res = tester.get(f'/api/v1/40405', content_type='application/json')
         self.assertEqual(res.status_code, 404)
 
+    def test_bad_request_error(self):
+        ''' Test server returns appropriate error message 500 server error trigger'''
+        tester = app.test_client(self)
+        expected = '{"Error": "Resource not found"}'
+
+        res = tester.get('/api/player/no', content_type='application/json')
+        self.assertEqual(res.data.decode('utf-8'), expected)
+        self.assertEqual(res.status_code, 404)
+        
 class GrabDataTestCase(unittest.TestCase):
     ''' Test cases for functions within grab_data script'''
     def test_get_teams_returns_correct_values(self):
@@ -60,9 +69,17 @@ class GrabDataTestCase(unittest.TestCase):
         competition = "Premier League"
 
         res = get_player_league_stats(teamID, competition)
-        self.assertIsInstance(res, list)
+        self.assertIsInstance(res, dict)
         self.assertIsInstance(res['league_id'], int)
         self.assertEqual(res['competition_name'], competition)
+
+    def test_get_player_team_stats_returns_correct_value(self):
+        ''' Test get_player_team_stats() returns correct values '''
+        teamID = 50
+
+        res = get_player_team_stats(teamID)
+        self.assertIsInstance(res, dict)
+        self.assertEqual(res['team_id'], teamID)
 
 if __name__ == '__main__':
     unittest.main()

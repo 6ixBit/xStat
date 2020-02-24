@@ -9,3 +9,6 @@ app = Flask(__name__)
 
 # Register blueprints
 app.register_blueprint(mod_api)
+
+# Testing circular dependency
+from src.api.Errors import errors
