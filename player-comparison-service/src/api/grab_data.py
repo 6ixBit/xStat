@@ -6,7 +6,7 @@ from pprint import pprint
 import pymongo
 
 # Local imports
-from config import Config
+from src.api.config import Config
 
 # All 5 leagues and their respective ids from the API
 leagues = {
@@ -36,7 +36,7 @@ def get_teams(league_id:int) -> list:
 
     # Parse team_ids from each team within the league
     team_ids = [ element['team_id'] for index,element in enumerate(teams[0]) ]     
-    return team_ids
+    return team_ids or None
 
 def get_players_id(team_id, season="2019-2020"):
     ''' Get stats for all players of each team passed as a parameter OR get all player ids for a team and return it in a list
