@@ -6,7 +6,7 @@ from pprint import pprint
 import pymongo
 
 # Local imports
-from src.api.config import Config
+from config import Config
 
 # All 5 leagues and their respective ids from the API
 leagues = {
@@ -54,7 +54,7 @@ def get_players_id(team_id, season="2019-2020"):
     player_ids = [ element['player_id'] for index, element in enumerate(players[0]) ]
     return player_ids
 
-def get_player_stats(player_id: int, league="Premier League"):
+def get_player_stats(player_id: int, league="Premier League", season="2019-2020"):
     ''' GET stats for each player and filter by params on link
         @param (644) player_id - Player id of a specific player
         @param ("Premier League") league - What league to filter stats by 
@@ -62,62 +62,63 @@ def get_player_stats(player_id: int, league="Premier League"):
     global headers
     url = f"https://api-football-v1.p.rapidapi.com/v2/players/player/{player_id}"
     
-    response = requests.get(url, headers=headers).json()
+    response = requests.get(url, headers=headers).json()['api']['players']
 
-    players = [ value['players'] for key, value in response.items() ]
+    player_stat = [el for index, el in enumerate(response) if el['league'] ==league and el['season'] ==season]
+    
+    # Return empty array to signify player response does not equal league and season params
+    if player_stat == []:
+        return []
 
-    # Get stats for a particular competition based on league param passed       
-    player_stat = [ element[index] for index,element in enumerate(players) if element[index]['league'] == league ]
-
-    # my_player = {
-    #     "player_id" : player_stat[0]['player_id'],
-    #     "player_name": player_stat[0]['player_name'],
-    #     "first_name": player_stat[0]['firstname'],
-    #     "last_name": player_stat[0]['lastname'],
-    #     "shirt_number": player_stat[0]['number'],
-    #     "position": player_stat[0]['position'],
-    #     "age": player_stat[0]['age'],
-    #     "team_name": player_stat[0]['team_name'],
-    #     "rating": player_stat[0]['rating'],
-    #     "nationality": player_stat[0]['nationality'],
-    #     "height": player_stat[0]['height'],
-    #     "weight": player_stat[0]['weight'],
-    #     "competition": player_stat[0]['league'],
-    #     "team_id": player_stat[0]['team_id'],
-    #     "season": player_stat[0]['season'],
-    #     "captain": player_stat[0]['captain'],
-    #     "total_shots": player_stat[0]['shots']['total'],
-    #     "shots_on_target": player_stat[0]['shots']['on'],
-    #     "goals": player_stat[0]['goals']['total'],
-    #     "goals_conceded": player_stat[0]['goals']['conceded'],
-    #     "assists": player_stat[0]['goals']['assists'],
-    #     "total_passes": player_stat[0]['passes']['total'],
-    #     "key_passes": player_stat[0]['passes']['key'],
-    #     "pass_accuracy": player_stat[0]['passes']['accuracy'],
-    #     "completed_tackles": player_stat[0]['tackles']['total'],
-    #     "blocks": player_stat[0]['tackles']['blocks'],
-    #     "interceptions": player_stat[0]['tackles']['interceptions'],
-    #     "dribble_attempts": player_stat[0]['dribbles']['attempts'],
-    #     "dribble_success": player_stat[0]['dribbles']['success'],
-    #     "fouls_drawn": player_stat[0]['fouls']['drawn'],
-    #     "fouls_commited": player_stat[0]['fouls']['committed'],
-    #     "yellow_cards": player_stat[0]['cards']['yellow'],
-    #     "red_cards": player_stat[0]['cards']['red'],
-    #     "penalty_won": player_stat[0]['penalty']['won'],
-    #     "penalty_commited": player_stat[0]['penalty']['commited'],
-    #     "penalty_success": player_stat[0]['penalty']['success'],
-    #     "penalty_missed": player_stat[0]['penalty']['missed'],
-    #     "penalty_saved": player_stat[0]['penalty']['saved'],
-    #     "appearences": player_stat[0]['games']['appearences'],
-    #     "minutes_played": player_stat[0]['games']['minutes_played'],
-    #     "match_starts": player_stat[0]['games']['lineups'],
-    #     "subbed_in": player_stat[0]['substitutes']['in'],
-    #     "subbed_out": player_stat[0]['substitutes']['out'],
-    #     "benched": player_stat[0]['substitutes']['bench'],
-    #     "total_duels": player_stat[0]['duels']['total'],
-    #     "duels_won": player_stat[0]['duels']['won']
-    # }
-    return player_stat
+    my_player = {
+        "player_id" : player_stat[0]['player_id'],
+        "player_name": player_stat[0]['player_name'],
+        "first_name": player_stat[0]['firstname'],
+        "last_name": player_stat[0]['lastname'],
+        "shirt_number": player_stat[0]['number'],
+        "position": player_stat[0]['position'],
+        "age": player_stat[0]['age'],
+        "team_name": player_stat[0]['team_name'],
+        "rating": player_stat[0]['rating'],
+        "nationality": player_stat[0]['nationality'],
+        "height": player_stat[0]['height'],
+        "weight": player_stat[0]['weight'],
+        "competition": player_stat[0]['league'],
+        "team_id": player_stat[0]['team_id'],
+        "season": player_stat[0]['season'],
+        "captain": player_stat[0]['captain'],
+        "total_shots": player_stat[0]['shots']['total'],
+        "shots_on_target": player_stat[0]['shots']['on'],
+        "goals": player_stat[0]['goals']['total'],
+        "goals_conceded": player_stat[0]['goals']['conceded'],
+        "assists": player_stat[0]['goals']['assists'],
+        "total_passes": player_stat[0]['passes']['total'],
+        "key_passes": player_stat[0]['passes']['key'],
+        "pass_accuracy": player_stat[0]['passes']['accuracy'],
+        "completed_tackles": player_stat[0]['tackles']['total'],
+        "blocks": player_stat[0]['tackles']['blocks'],
+        "interceptions": player_stat[0]['tackles']['interceptions'],
+        "dribble_attempts": player_stat[0]['dribbles']['attempts'],
+        "dribble_success": player_stat[0]['dribbles']['success'],
+        "fouls_drawn": player_stat[0]['fouls']['drawn'],
+        "fouls_commited": player_stat[0]['fouls']['committed'],
+        "yellow_cards": player_stat[0]['cards']['yellow'],
+        "red_cards": player_stat[0]['cards']['red'],
+        "penalty_won": player_stat[0]['penalty']['won'],
+        "penalty_commited": player_stat[0]['penalty']['commited'],
+        "penalty_success": player_stat[0]['penalty']['success'],
+        "penalty_missed": player_stat[0]['penalty']['missed'],
+        "penalty_saved": player_stat[0]['penalty']['saved'],
+        "appearences": player_stat[0]['games']['appearences'],
+        "minutes_played": player_stat[0]['games']['minutes_played'],
+        "match_starts": player_stat[0]['games']['lineups'],
+        "subbed_in": player_stat[0]['substitutes']['in'],
+        "subbed_out": player_stat[0]['substitutes']['out'],
+        "benched": player_stat[0]['substitutes']['bench'],
+        "total_duels": player_stat[0]['duels']['total'],
+        "duels_won": player_stat[0]['duels']['won']
+    }
+    return my_player
 
 def get_player_league_stats(team_id:int, competition:str = "Premier League"):
     '''
@@ -190,7 +191,11 @@ if __name__ == '__main__':
     player_stats_pool = []
     for index, player_id in enumerate(player_ids_pool):
         # Get player stats for player - FUNC THROWING ERROR
-        my_player = get_player_stats(player_id)[0]
+        my_player = get_player_stats(player_id)
+
+        # Handle potential no response from API
+        if my_player == []:
+            continue
     
         # Fetch league and team stats using players team id
         league_stats = get_player_league_stats(my_player['team_id'])
