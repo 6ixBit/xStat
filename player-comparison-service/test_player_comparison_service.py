@@ -2,6 +2,9 @@
 import unittest
 
 # Local imports
+import sys
+sys.path.append(sys.path[0] + "/src/api")
+
 from src import app
 from src.api.grab_data \
 import get_teams, get_players_id, get_player_stats, \

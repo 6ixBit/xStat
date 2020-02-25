@@ -5,7 +5,9 @@ from pymongo import MongoClient
 from pprint import pprint
 
 # Local imports
-from src.api.config import Config
+import sys, os
+sys.path.append('..') # Add folder above to sys path so it can be imported
+from config import Config
 
 # Database config
 client = MongoClient(Config.MONGO_URL)
