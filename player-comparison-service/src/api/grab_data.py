@@ -11,7 +11,7 @@ from config import Config
 # All 5 leagues and their respective ids from the API
 leagues = {
     "Premier League" : 524,
-    "La Liga" : 775,
+    "La Liga" : 775, #Primera Division
     "Serie A" : 891,
     "Bundesliga" : 754,
     "Ligue 1" : 525
@@ -54,7 +54,7 @@ def get_players_id(team_id, season="2019-2020"):
     player_ids = [ element['player_id'] for index, element in enumerate(players[0]) ]
     return player_ids
 
-def get_player_stats(player_id: int, league="Premier League", season="2019-2020"):
+def get_player_stats(player_id: int, league="Primera Division", season="2019-2020"):
     ''' GET stats for each player and filter by params on link
         @param (644) player_id - Player id of a specific player
         @param ("Premier League") league - What league to filter stats by 
@@ -120,7 +120,7 @@ def get_player_stats(player_id: int, league="Premier League", season="2019-2020"
     }
     return my_player
 
-def get_player_league_stats(team_id:int, competition:str = "Premier League"):
+def get_player_league_stats(team_id:int, competition:str = "Primera Division"):
     '''
     @desc Returns league stats for a specific player
     @param team_id - ID of team to fetch league stats for
@@ -182,7 +182,8 @@ def submit_to_db(player_stat):
     print(player.inserted_id)
 
 if __name__ == '__main__':
-    team_ids = get_teams(leagues['Premier League'])
+    team_ids = get_teams(775)
+    pprint(team_ids)
 
     player_ids = list(map(get_players_id, team_ids))
     # Player ids returns a nested list, player ids pools removed that extra layer
