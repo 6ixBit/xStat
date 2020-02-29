@@ -54,7 +54,7 @@ def get_players_id(team_id, season="2019-2020"):
     player_ids = [ element['player_id'] for index, element in enumerate(players[0]) ]
     return player_ids
 
-def get_player_stats(player_id: int, league="Primera Division", season="2019-2020"):
+def get_player_stats(player_id: int, league="Ligue 1", season="2019-2020"):
     ''' GET stats for each player and filter by params on link
         @param (644) player_id - Player id of a specific player
         @param ("Premier League") league - What league to filter stats by 
@@ -120,7 +120,7 @@ def get_player_stats(player_id: int, league="Primera Division", season="2019-202
     }
     return my_player
 
-def get_player_league_stats(team_id:int, competition:str = "Primera Division"):
+def get_player_league_stats(team_id:int, competition:str = "Ligue 1"):
     '''
     @desc Returns league stats for a specific player
     @param team_id - ID of team to fetch league stats for
@@ -133,6 +133,10 @@ def get_player_league_stats(team_id:int, competition:str = "Primera Division"):
 
     # A team can have multiple competitions, parse result and return competition param passed
     league_stats = [league for league in response if league['name'] == competition]
+
+    # Return empty array to signify player response does not equal league and season params
+    if league_stats == []:
+        return []
 
     parsed_stats = {
         "league_id" : league_stats[0]['league_id'],
@@ -166,6 +170,11 @@ def get_player_team_stats(team_id):
         'stadia_capacity': response[0]['venue_capacity'],
         'stadia_city': response[0]['venue_city']
     }
+
+    # Return empty array to signify player response does not equal league and season params
+    if team_stats == []:
+        return []
+
     return team_stats
     
 def submit_to_db(player_stat):
@@ -182,8 +191,8 @@ def submit_to_db(player_stat):
     print(player.inserted_id)
 
 if __name__ == '__main__':
-    team_ids = get_teams(775)
-    pprint(team_ids)
+    team_ids = get_teams(525)
+    print("Get Team IDs - COMPLETE")
 
     player_ids = list(map(get_players_id, team_ids))
     # Player ids returns a nested list, player ids pools removed that extra layer
@@ -191,7 +200,7 @@ if __name__ == '__main__':
 
     player_stats_pool = []
     for index, player_id in enumerate(player_ids_pool):
-        # Get player stats for player - FUNC THROWING ERROR
+        # Get player stats for player
         my_player = get_player_stats(player_id)
 
         # Handle potential no response from API
@@ -208,8 +217,15 @@ if __name__ == '__main__':
 
         # Append player to pool of players
         player_stats_pool.append(my_player)
-        
+
+    print("Get all players stats - COMPLETE")
+
+    numb_of_submits = 0
     # Insert each players stat to database
     for player in player_stats_pool:
         submit_to_db(player)
+        numb_of_submits += 1
+    
+    print(f"{numb_of_submits} documents submitted to database.")
 
+    
