@@ -44,5 +44,4 @@ def get_all_players(season="2019-2020"):
     for player in received_players:
         del player['_id']
         players.append(player)
-
     return players

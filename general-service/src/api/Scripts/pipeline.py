@@ -4,7 +4,7 @@
 # Third party imports
 import pandas as pd
 from pprint import pprint
-from flask import make_response,jsonify
+from flask import jsonify
 
 # Local application imports
 from src.api.Models.players import get_players_frm_league, get_all_players
