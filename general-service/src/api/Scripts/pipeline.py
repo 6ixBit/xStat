@@ -14,7 +14,9 @@ from src.api.Models.players import get_players_frm_league, get_all_players
 def filter_top_scorers(league: str, numbOfResults=30):
     '''
      Most goals - Hitman ⚔️
-     @desc Cleans and sorts the data passed to it and returns it in its required format
+     @desc Cleans and sorts the data passed to it and returns it in its required format.
+     @param league - League to filter results by.
+     @param numbOfResults - Number of results to return.
      @return [{}] - list of dict objects for each row
     '''
     # Pull players from database
@@ -45,7 +47,9 @@ def filter_top_scorers(league: str, numbOfResults=30):
 def filter_pass_accuracy(league: str, numbOfResults=30):
     '''
     Perfectionist 🎯 & key_passes = Talisman ⚙️
-    @desc Cleans and sorts the data by those with the highest pass accuracy
+    @desc Cleans and sorts the data by those with the highest pass accuracy.
+    @param league - League to filter results by.
+    @param numbOfResults - Number of results to return.
     @return [{}] - list of dict objects for each row
     '''
       # Pull players from database
@@ -77,8 +81,10 @@ def filter_pass_accuracy(league: str, numbOfResults=30):
 def filter_dribbles_completed(league: str, numbOfResults=30):
     '''
     The magician 🎩
-    @desc Cleans and sorts the data by those with the most dribbles completed 
-    @return [{}] - list of dict objects for each row
+    @desc Cleans and sorts the data by those with the most dribbles completed.
+    @param league - League to filter and compute results by.
+    @param numbOfResults - Number of results to return.
+    @return [{}] - list of dict objects for each row.
     '''
       # Pull players from database
     players = get_players_frm_league(f"{league}")
@@ -106,6 +112,8 @@ def filter_tackles_completed(league: str, numbOfResults=30):
     '''
     King of tackles 👑
     @desc Cleans and sorts the data by those with the most tackles completed
+    @param league - Name of league to filter data for.
+    @param numbOfResults - Number of results to return.
     @return [{}] - list of dict objects for each row
     '''
       # Pull players from database
@@ -136,6 +144,7 @@ def filter_tackles_completed(league: str, numbOfResults=30):
 def filter_all_stats(numbOfResults=25):
     '''
     @desc Will bind all stats for every player and have a p90 column.
+    @numfOfResults - Number of resuls to return
     @return [{}] - list of dict objects for each row
     '''
     # Pull players from database
@@ -208,7 +217,9 @@ def filter_all_stats(numbOfResults=25):
 def calc_per_90(stat, minutes_played):
     '''
     @desc Returns the per 90 value of a stat passed to 2 decimal places
-    @return int value to 2 decimal places
+    @param stat - Statistic to calculate a per 90 result of.
+    @param minutes_played - Amount of minutes played during te period of that stat.
+    @return int value to 2 decimal places.
     '''
     if type(stat) != int or type(minutes_played) != int:
         return 0

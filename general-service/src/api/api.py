@@ -18,9 +18,11 @@ mod = Blueprint('api', __name__)
 api = Api(mod, prefix='/api/v1')
 
 class Goals(Resource):
-    # @desc Returns the highest goal scorers from a particular league in descending order
-    # @route GET /api/v1/stats/goals/:leaguename
-    # @param :leaguename - name of league the players to search
+    '''
+    @desc Returns the highest goal scorers from a particular league in descending order
+    @route GET /api/v1/stats/goals/:leaguename
+    @param :leaguename - name of league the players to search
+    '''
     def get(self, leaguename):     
         try:
             players = filter_top_scorers(leaguename) 
@@ -29,9 +31,11 @@ class Goals(Resource):
             return {'Error' : "Failed to return requested data"}, 400
 
 class Passing(Resource):
-    # @desc Returns players with the highest passing stats
-    # @route GET /api/v1/stats/passes/:leaguename
-    # @param :leaguename - name of league the players to search
+    '''
+    @desc Returns players with the highest passing stats
+    @route GET /api/v1/stats/passes/:leaguename
+    @param :leaguename - name of league the players to search
+    '''
     def get(self, leaguename):     
         try:
             players = filter_pass_accuracy(leaguename) 
@@ -40,9 +44,11 @@ class Passing(Resource):
             return {'Error' : "Failed to return requested data"}, 400
 
 class Dribbling(Resource):
-    # @desc Returns players with the highest dribbling stats
-    # @route GET /api/v1/stats/dribbles/:leaguename
-    # @param :leaguename - name of league the players to search
+    '''
+    @desc Returns players with the highest dribbling stats
+    @route GET /api/v1/stats/dribbles/:leaguename
+    @param :leaguename - name of league the players to search
+    '''
     def get(self, leaguename):     
         try:
             players = filter_dribbles_completed(leaguename) 
@@ -51,9 +57,11 @@ class Dribbling(Resource):
             return {'Error' : "Failed to return requested data"}, 400
 
 class Tackling(Resource):
-    # @desc Returns players with the highest tackling stats
-    # @route GET /api/v1/stats/tackles/:leaguename
-    # @param :leaguename - name of league the players to search
+    '''
+    @desc Returns players with the highest tackling stats
+    @route GET /api/v1/stats/tackles/:leaguename
+    @param leaguename - Name of league the players to search
+    '''
     def get(self, leaguename):     
         try:
             players = filter_tackles_completed(leaguename) 
@@ -62,8 +70,10 @@ class Tackling(Resource):
             return {'Error' : "Failed to return requested data"}, 400
 
 class Players(Resource):
-    # @desc Returns all players with a combination of all calcluated stats
-    # @route GET /api/v1/stats/
+    '''
+    @desc Returns all players with a combination of all calcluated stats
+    @route GET /api/v1/stats/
+    '''
     def get(self):     
         try:
             players = filter_all_stats() 

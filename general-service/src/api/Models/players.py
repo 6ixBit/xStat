@@ -2,7 +2,6 @@
 
 # Third party imports
 from pymongo import MongoClient
-from pprint import pprint
 
 # Local imports
 import sys, os
