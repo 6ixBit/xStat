@@ -7,11 +7,13 @@ import json
 from pprint import pprint
 
 # Local imports
-from src.api.Scripts.pipeline import filter_top_scorers, \
-filter_pass_accuracy,\
-filter_dribbles_completed,\
-filter_tackles_completed, \
-filter_all_stats
+# from pipeline import filter_top_scorers, \
+# filter_pass_accuracy,\
+# filter_dribbles_completed,\
+# filter_tackles_completed, \
+# filter_all_stats
+
+from src.api.pipeline import filter_top_scorers, filter_pass_accuracy, filter_dribbles_completed, filter_tackles_completed, filter_all_stats
 
 # App instances and config
 mod = Blueprint('api', __name__)

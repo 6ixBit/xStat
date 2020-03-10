@@ -4,9 +4,9 @@
 from pymongo import MongoClient
 
 # Local imports
-import sys, os
-sys.path.append('..') # Add folder above to sys path so it can be imported
-from config import Config
+# import sys, os
+# sys.path.append('..') # Add folder above to sys path so it can be imported
+from src.api.config import Config
 
 # Database config
 client = MongoClient(Config.MONGO_URL)

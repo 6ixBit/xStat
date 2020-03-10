@@ -6,7 +6,7 @@ services:
         volumes:
             - ./frontend-service:/usr/src/app
         ports:
-            - 5000:80
+            - 8080:80 # Left = HOST. Right = CONTAINER
         depends_on: 
             - general-service
             - player-comparison-service

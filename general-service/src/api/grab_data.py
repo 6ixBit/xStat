@@ -137,7 +137,7 @@ def write_to_db(player_stat):
     print(player.inserted_id)
 
 if __name__ == '__main__':
-    team_ids = get_teams(leagues["Seria A"]) # PL, Bundesliga, La Liga, Ligue 1, Seri
+    team_ids = get_teams(leagues["Serie A"]) # PL, Bundesliga, La Liga, Ligue 1, Seri
 
     player_ids = list(map(get_players_id, team_ids))
     player_ids_pool = [ inner for outer in player_ids for inner in outer ] # Pool of player ids from a particular team.

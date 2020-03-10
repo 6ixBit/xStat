@@ -31,7 +31,6 @@ def get_player(player_name:str, season:str="2019-2020"):
 
     players = []
     for player in recevied_player:
-        del player['_id']
         players.append(player)
 
     return players

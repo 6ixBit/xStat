@@ -1,11 +1,13 @@
-FROM python:3
+# build stage
+FROM node:lts-alpine as build-stage
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
 
-COPY . /usr/src/app
-
-WORKDIR /usr/src/app
-
-RUN pip install --upgrade pip
-RUN pip install --no-cache-dir -r requirements.txt
-
-CMD ["python", "run.py"]
-
+# production stage
+FROM nginx:stable-alpine as production-stage
+COPY --from=build-stage /app/dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
