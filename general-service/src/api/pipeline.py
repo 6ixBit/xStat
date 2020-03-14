@@ -9,7 +9,6 @@ from flask import jsonify
 # Local application imports
 from src.api.players import get_players_frm_league, get_all_players
 
-#TODO: Limit output of each function to 50 using a param to avoid it being static
 
 def filter_top_scorers(league: str, numbOfResults=30):
     '''

@@ -75,6 +75,7 @@ class Players(Resource):
     '''
     @desc Returns all players with a combination of all calcluated stats
     @route GET /api/v1/stats/
+    @return JSON {}
     '''
     def get(self):     
         try:
@@ -83,11 +84,23 @@ class Players(Resource):
         except: 
             return {'Error' : "Failed to return requested data"}, 400
 
+
+class Leagues(Resource):
+    '''
+    @desc Returns a list of available leagues for players in the database
+    @route GET /api/v1/leagues
+    @return JSON {}
+    '''
+    def get(self):
+        current_leagues = ["Premier League", "La Liga", "Serie A", "Bundesliga", "Ligue 1"]
+
+        return {"Result" : current_leagues}, 200
+
+
 # Routes for API
 api.add_resource(Goals, '/stats/goals/<string:leaguename>')
 api.add_resource(Passing, '/stats/passes/<string:leaguename>')
 api.add_resource(Dribbling, '/stats/dribbles/<string:leaguename>')
 api.add_resource(Tackling, '/stats/tackles/<string:leaguename>')
 api.add_resource(Players, '/stats')
-
-
+api.add_resource(Leagues, '/stats/leagues')
