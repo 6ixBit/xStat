@@ -4,9 +4,9 @@ services:
     frontend:
         build: ./frontend-service
         volumes:
-            - ./frontend-service:/usr/src/app
+            - ./frontend-service:/app
         ports:
-            - 8080:80 # Left = HOST. Right = CONTAINER
+            - 8080:8080 # Left = HOST. Right = CONTAINER
         depends_on: 
             - general-service
             - player-comparison-service
@@ -16,16 +16,16 @@ services:
         build: ./general-service
         volumes:
             - ./general-service:/usr/src/app
-        expose:
-            - "80"
+        ports:
+            - 8081:80
         restart: always
 
     player-comparison-service:
         build: ./player-comparison-service
         volumes:
             - ./player-comparison-service:/usr/src/app
-        expose:
-            - "80"
+        ports:
+            - 8082:80
         restart: always
         
 

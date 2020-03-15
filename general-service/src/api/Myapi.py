@@ -7,12 +7,6 @@ import json
 from pprint import pprint
 
 # Local imports
-# from pipeline import filter_top_scorers, \
-# filter_pass_accuracy,\
-# filter_dribbles_completed,\
-# filter_tackles_completed, \
-# filter_all_stats
-
 from src.api.pipeline import filter_top_scorers, filter_pass_accuracy, filter_dribbles_completed, filter_tackles_completed, filter_all_stats
 
 # App instances and config
@@ -84,17 +78,22 @@ class Players(Resource):
         except: 
             return {'Error' : "Failed to return requested data"}, 400
 
-
 class Leagues(Resource):
     '''
     @desc Returns a list of available leagues for players in the database
-    @route GET /api/v1/leagues
+    @route GET /api/v1/stats/leagues
     @return JSON {}
     '''
     def get(self):
-        current_leagues = ["Premier League", "La Liga", "Serie A", "Bundesliga", "Ligue 1"]
+        current_leagues = [ 
+            { "value": 'a', "text": 'Premier League' },
+            { "value": 'b', "text": 'Serie A' },
+            { "value": 'c', "text": 'La Liga' },
+            { "value": 'd', "text": 'Ligue 1' },
+            { "value": 'f', "text": 'Bundesliga'}
+        ]
 
-        return {"Result" : current_leagues}, 200
+        return current_leagues, 200
 
 
 # Routes for API
