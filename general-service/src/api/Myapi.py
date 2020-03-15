@@ -86,11 +86,11 @@ class Leagues(Resource):
     '''
     def get(self):
         current_leagues = [ 
-            { "value": 'a', "text": 'Premier League' },
-            { "value": 'b', "text": 'Serie A' },
-            { "value": 'c', "text": 'La Liga' },
-            { "value": 'd', "text": 'Ligue 1' },
-            { "value": 'f', "text": 'Bundesliga'}
+            { "value": 'Premier League', "text": 'Premier League' },
+            { "value": 'Serie A', "text": 'Serie A' },
+            { "value": 'La Liga', "text": 'La Liga' },
+            { "value": 'Ligue 1', "text": 'Ligue 1' },
+            { "value": 'Bundesliga', "text": 'Bundesliga'}
         ]
 
         return current_leagues, 200

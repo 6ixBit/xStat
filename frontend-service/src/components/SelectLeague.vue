@@ -2,10 +2,9 @@
 
     <div>
         <p>Choose a league: {{ selected }}</p>
-        <b-form-select v-model="selected" :options="leagueData">
+        <b-form-select v-model="selected" @change="selectedLeague">
             <template v-slot:first>
-               <b-form-select-option :value="null" disabled>-- Select a league --</b-form-select-option>
-                <!-- <b-form-select-option v-for="league of leagueData" v-bind:key="league.id"> </b-form-select-option> -->
+                <b-form-select-option v-for="league in leagueData" v-bind:key="league.id" :value="league.value"> {{league.text}} </b-form-select-option> 
             </template>
         </b-form-select>
   </div>
@@ -18,7 +17,7 @@ import axios from 'axios'
 export default {
     data(){
         return {
-            selected: "",
+            selected: "Premier League",
             leagueData: []
         }
     },
@@ -26,11 +25,17 @@ export default {
         try {
             // Make request to general micro service.
             const res = await axios.get("http://localhost:8081/api/v1/stats/leagues")
-            console.log(res)
-
-            this.leagueData = res // Set league data to list of leagues array.
+            
+            // Set league data to list of leagues array.
+            this.leagueData = res.data
         } catch (e) {
             console.log(e)
+        }
+    },
+    methods: {
+        selectedLeague(){
+            // Send an event to the parent when the select option has changed
+            this.$emit("leagueModified", this.selected)
         }
     }
 }

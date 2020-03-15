@@ -9,7 +9,6 @@ from flask import jsonify
 # Local application imports
 from src.api.players import get_players_frm_league, get_all_players
 
-
 def filter_top_scorers(league: str, numbOfResults=30):
     '''
      Most goals - Hitman ⚔️
@@ -24,7 +23,7 @@ def filter_top_scorers(league: str, numbOfResults=30):
 
     # Clean data and only include the following columns
     columns = ['player_name', 'team_name', 'competition', 'age', \
-                'goals', 'minutes_played', 'match_starts', 'total_shots', 'shots_on_target']
+                'goals', 'minutes_played', 'match_starts', 'total_shots', 'shots_on_target', 'season']
     data = df[columns]
 
     # Sort rows by goals so that the dataframe can be ordered
@@ -57,7 +56,7 @@ def filter_pass_accuracy(league: str, numbOfResults=30):
 
      # Clean data and only include the following columns
     columns = ['player_name', 'team_name', 'competition', 'age', \
-             'total_passes', 'pass_accuracy', 'key_passes', 'assists', 'minutes_played', 'match_starts']
+             'total_passes', 'pass_accuracy', 'key_passes', 'assists', 'minutes_played', 'match_starts', 'season']
     data = df[columns]
 
      # Sort rows by pass accuracy so that the dataframe can be ordered
@@ -91,7 +90,7 @@ def filter_dribbles_completed(league: str, numbOfResults=30):
 
      # Clean data and only include the following columns
     columns = ['player_name', 'team_name', 'competition', 'age', \
-             'dribble_attempts', 'dribble_success', 'minutes_played', 'match_starts']
+             'dribble_attempts', 'dribble_success', 'minutes_played', 'match_starts', 'season']
     data = df[columns]
 
     # Sort rows by pass accuracy so that the dataframe can be ordered
@@ -121,7 +120,7 @@ def filter_tackles_completed(league: str, numbOfResults=30):
 
      # Clean data and only include the following columns
     columns = ['player_name', 'team_name', 'competition', 'age', \
-             'completed_tackles', 'blocks', 'interceptions', 'fouls_commited', 'yellow_cards', 'red_cards', 'minutes_played']
+             'completed_tackles', 'blocks', 'interceptions', 'fouls_commited', 'yellow_cards', 'red_cards', 'minutes_played', 'season']
     data = df[columns]
 
     # Calculate per 90 columns and add to dataframe 
@@ -155,7 +154,8 @@ def filter_all_stats(numbOfResults=25):
         'player_name',
         'team_name', 
         'position',
-        'competition', 
+        'competition',
+        'season', 
         'age', 
         'total_passes',
         'pass_accuracy', 
