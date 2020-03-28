@@ -20,13 +20,14 @@ def filter_stats_for_player(player_name):
         return []
 
     df = pd.DataFrame(player)
-    
+
     # Parse columns from database
     columns = [
         'player_name',
         'team_name', 
         'position',
-        'competition', 
+        'competition',
+        'season', 
         'age', 
         'total_passes',
         'pass_accuracy', 
@@ -54,10 +55,35 @@ def filter_stats_for_player(player_name):
         'penalty_commited',
         'penalty_success',
         'penalty_missed'
-    ]
+        ]
+
     data = df[columns]
 
-    return data
+    # Calculate per 90 columns and add to dataframe 
+    data['goals_per90'] = data.apply(lambda x: calc_per_90(x['goals'], x['minutes_played']), axis=1)
+    data['shots_per90'] = data.apply(lambda x: calc_per_90(x['total_shots'], x['minutes_played']), axis=1)
+    data['shots_on_target_p90'] = data.apply(lambda x: calc_per_90(x['shots_on_target'], x['minutes_played']), axis=1)
+
+    # Passes
+    data['assists_per90'] = data.apply(lambda x: calc_per_90(x['assists'], x['minutes_played']), axis=1)
+    data['accuratePasses_per90'] = data.apply(lambda x: calc_per_90(x['total_passes'], x['minutes_played']), axis=1)
+    data['keyPasses_per90'] = data.apply(lambda x: calc_per_90(x['key_passes'], x['minutes_played']), axis=1)
+
+    # # Dribbles
+    data['dribbleSuccess_per90'] = data.apply(lambda x: calc_per_90(x['dribble_success'], x['minutes_played']), axis=1)
+
+    # # Defensive attributes
+    data['tacklesCompleted_per90'] = data.apply(lambda x: calc_per_90(x['completed_tackles'], x['minutes_played']), axis=1)
+    data['blocks_per90'] = data.apply(lambda x: calc_per_90(x['blocks'], x['minutes_played']), axis=1)
+    data['interceptions_per90'] = data.apply(lambda x: calc_per_90(x['interceptions'], x['minutes_played']), axis=1)
+    data['foulsCommited_per90'] = data.apply(lambda x: calc_per_90(x['fouls_commited'], x['minutes_played']), axis=1)
+    data['foulsDrawn_per90'] = data.apply(lambda x: calc_per_90(x['fouls_drawn'], x['minutes_played']), axis=1)
+    
+    data = data.head(1)
+
+    # Export as dictionary object to allow for JSON parsing
+    result = data.to_dict(orient='records')
+    return result
 
 def calc_per_90(stat:int, minutes_played:int):
     '''
@@ -73,3 +99,4 @@ def calc_per_90(stat:int, minutes_played:int):
         return 0
 
     return round( (stat / minutes_played) * 90, 2)
+

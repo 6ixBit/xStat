@@ -1,7 +1,7 @@
 ''' API endpoints to be exposed for Player Comparison matrix '''
 
 # Thid party imports
-from flask import Blueprint, json
+from flask import Blueprint, jsonify
 
 # Local  imports
 from src import app
@@ -18,7 +18,7 @@ def get_players(playername):
     @return Returns the computed statistics of a player
     '''
     try:
-        return filter_stats_for_player(playername), 200
+        return jsonify(filter_stats_for_player(playername)), 200
     except:
         return {"error": "Could not return player requested"}, 400
 
