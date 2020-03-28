@@ -7,7 +7,7 @@ from pprint import pprint
 # Local imports
 import sys, os
 sys.path.append('..') 
-from .config import Config
+from config import Config
 
 # DB config
 client = MongoClient(Config.MONGO_URL)
@@ -21,18 +21,15 @@ def get_player(player_name:str, season:str="2019-2020"):
     @param season - Season of player to search for
     @return [{}] - list of dict
     '''
+    received_player = collection.find_one({"player_name": player_name})
 
-    recevied_player = collection.find_one(
-        {"player_name": player_name})
-
-    if recevied_player is None:
+    if received_player is None:
         return []
 
-    players = []
-    for player in recevied_player:
-        players.append(player)
+    # Remove Mongo Object ID from result
+    del received_player['_id']
 
-    return players
+    return received_player
 
 def search_player(first_name:str):
     '''
@@ -54,7 +51,7 @@ def search_player(first_name:str):
         del player['_id']
         del player['Team']
         del player['League']
-        
+
         players.append(player)
 
     return {

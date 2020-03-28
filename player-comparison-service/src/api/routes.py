@@ -6,14 +6,21 @@ from flask import Blueprint, json
 # Local  imports
 from src import app
 from .players import search_player
+from .pipeline import filter_stats_for_player
 
 # Register blueprint
 mod = Blueprint('api', __name__)
 
-@app.route('/api/v1/players/<string:playername>', methods=['GET'])
+@app.route('/api/v1/player/<string:playername>', methods=['GET'])
 def get_players(playername):
-    #TODO: Check playername to ensure its of type string before being called
-    return json.dumps({'Success' : 'You have reached the player comparison service', 'data': playername}), 200
+    '''
+    @desc Computes the stats of the player passed to query string playername
+    @return Returns the computed statistics of a player
+    '''
+    try:
+        return filter_stats_for_player(playername), 200
+    except:
+        return {"error": "Could not return player requested"}, 400
 
 
 @app.route('/api/v1/players/search/<string:name>', methods=['GET'])

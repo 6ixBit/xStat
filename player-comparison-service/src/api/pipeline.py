@@ -6,8 +6,7 @@ from pprint import pprint
 from flask import jsonify
 
 # Local imports
-from players import get_player, search_player
-
+from .players import get_player, search_player
 
 def filter_stats_for_player(player_name):
     '''
@@ -74,5 +73,3 @@ def calc_per_90(stat:int, minutes_played:int):
         return 0
 
     return round( (stat / minutes_played) * 90, 2)
-
-pprint(filter_stats_for_player("J. Milner"))
