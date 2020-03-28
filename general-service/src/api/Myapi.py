@@ -95,7 +95,6 @@ class Leagues(Resource):
 
         return current_leagues, 200
 
-
 # Routes for API
 api.add_resource(Goals, '/stats/goals/<string:leaguename>')
 api.add_resource(Passing, '/stats/passes/<string:leaguename>')

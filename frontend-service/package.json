@@ -16,7 +16,8 @@
     "http": "0.0.0",
     "vue": "^2.6.11",
     "vue-apexcharts": "^1.5.2",
-    "vue-router": "^3.1.6"
+    "vue-router": "^3.1.6",
+    "vue-suggestion": "^1.1.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.2.0",

@@ -7,8 +7,7 @@ from pprint import pprint
 # Local imports
 import sys, os
 sys.path.append('..') 
-
-from config import Config
+from .config import Config
 
 # DB config
 client = MongoClient(Config.MONGO_URL)
@@ -35,7 +34,6 @@ def get_player(player_name:str, season:str="2019-2020"):
 
     return players
 
-
 def search_player(first_name:str):
     '''
     @desc Searches for players in database with a similar first_name
@@ -54,6 +52,9 @@ def search_player(first_name:str):
     players = []
     for player in matched_players:
         del player['_id']
+        del player['Team']
+        del player['League']
+        
         players.append(player)
 
     return {

@@ -26,6 +26,8 @@ export default {
             const res = await axios.get(`http://localhost:8081/api/v1/stats/goals/${this.league}`)
 
             var playerData = [] // Hold player data to be plotted
+            
+            // REMOVE ONCE DONE, VALUE IS STATIC ON LOAD.
             var playerName = []
 
             // Extract data from response 

@@ -1,17 +1,19 @@
 <template>
     <div>
         <nav-bar/>
-        <h1>welcome to the player comparison service</h1>
+        <grid/>
     </div>
 </template>
 
 
 <script>
 import NavBar from '../components/NavBar'
+import Grid from '../components/playerComparison/Grid'
 
 export default {
     components: {
-        'nav-bar' : NavBar
+        'nav-bar' : NavBar,
+        'grid': Grid
     }
 }
 </script>

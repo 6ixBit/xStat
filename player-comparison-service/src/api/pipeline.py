@@ -6,7 +6,8 @@ from pprint import pprint
 from flask import jsonify
 
 # Local imports
-from Models.players import get_player
+from players import get_player, search_player
+
 
 def filter_stats_for_player(player_name):
     '''
@@ -57,7 +58,7 @@ def filter_stats_for_player(player_name):
     ]
     data = df[columns]
 
-    return data #TODO: Investigate bug from Models/players.py
+    return data
 
 def calc_per_90(stat:int, minutes_played:int):
     '''
