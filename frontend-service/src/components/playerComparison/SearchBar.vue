@@ -27,9 +27,14 @@ import axios from 'axios'
       return {
         text: '',
         players: [],
-        numbOfResults: 0,
-        selectedPlayers: []
+        numbOfResults: 0
       }
+    },
+    computed: {
+      selectedPlayers(){
+        return this.$store.state.selectedPlayers
+      }
+
     },
     methods: {
       async OnChange() {
@@ -53,18 +58,13 @@ import axios from 'axios'
           }
       },
       addPlayer(player) {
-        //@desc A selected player is added to list of select players
-        if (this.selectedPlayers.length >= 2) {
-          alert("You can not add more than 2 players")
-        } else {
-          this.selectedPlayers.push(player.player_name)
-        }
+        // Mutate state to add player in store 
+        this.$store.commit('addPlayer', player)
       },
       removePlayer(playerName){
-        // @desc Remove player from selected list
-        this.selectedPlayers = this.selectedPlayers.filter(el => el !== playerName)
+        // Mutate state to remove player in store 
+        this.$store.commit('removePlayer', playerName)
       }
-
     }
   }
 </script>

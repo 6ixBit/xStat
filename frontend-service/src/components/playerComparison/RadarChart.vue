@@ -6,7 +6,7 @@
 
 <script>
 // Third party imports
-//import VueApexCharts from 'vue-apexcharts'
+// import VueApexCharts from 'vue-apexcharts'
 
 export default {
     computed: {
