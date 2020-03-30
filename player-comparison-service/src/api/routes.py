@@ -11,7 +11,7 @@ from .pipeline import filter_stats_for_player
 # Register blueprint
 mod = Blueprint('api', __name__)
 
-@app.route('/api/v1/player/<string:playername>', methods=['GET'])
+@app.route('/api/v1/players/<string:playername>', methods=['GET'])
 def get_players(playername):
     '''
     @desc Computes the stats of the player passed to query string playername

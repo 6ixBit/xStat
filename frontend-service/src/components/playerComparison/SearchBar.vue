@@ -34,7 +34,6 @@ import axios from 'axios'
       selectedPlayers(){
         return this.$store.state.selectedPlayers
       }
-
     },
     methods: {
       async OnChange() {
