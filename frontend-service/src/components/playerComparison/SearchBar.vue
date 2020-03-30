@@ -1,7 +1,6 @@
 <template>
   <div>
     <div>
-      Players: {{ selectedPlayers }}
       <div class="autocomplete"> <!-- SEARCH PLAYERS -->
           <b-form-input @input="OnChange"  v-model="text" placeholder="Enter player name" id="search_player"></b-form-input>
       </div>
@@ -17,7 +16,6 @@
        </ul>
     </div>
 
-  
   </div>
 </template>
 
@@ -50,14 +48,12 @@ import axios from 'axios'
             }
   
             } catch (error) {
-            // When request fails set returned results to 0
-            console.log(error)
-            this.numbOfResults = 0
+              console.log(error)
+              this.numbOfResults = 0
           }
       },
       addPlayer(player) {
         //@desc A selected player is added to list of select players
-        // Check size of players selected, if more than 2 then prevent user from adding a new player.
         if (this.selectedPlayers.length >= 2) {
           alert("You can not add more than 2 players")
         } else {
@@ -78,32 +74,10 @@ import axios from 'axios'
   box-sizing: border-box;
 }
 
-body {
-  font: 16px Arial;  
-}
-
 /*the container must be positioned relative:*/
 .autocomplete {
   position: relative;
   display: inline-block;
-}
-
-input {
-  border: 1px solid transparent;
-  background-color: #f1f1f1;
-  padding: 10px;
-  font-size: 16px;
-}
-
-input[type=text] {
-  background-color: #f1f1f1;
-  width: 100%;
-}
-
-input[type=submit] {
-  background-color: DodgerBlue;
-  color: #fff;
-  cursor: pointer;
 }
 
 .autocomplete-items {
@@ -135,4 +109,5 @@ input[type=submit] {
   background-color: DodgerBlue !important; 
   color: #ffffff; 
 }
+
 </style>

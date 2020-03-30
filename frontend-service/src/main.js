@@ -2,6 +2,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import Routes from './routes'
+import { store } from "./store/store"
 
 // Third party imports
 import BootstrapVue from 'bootstrap-vue'
@@ -20,6 +21,7 @@ const router = new VueRouter({routes: Routes})
 
 new Vue({
   render: h => h(App),
-  router
+  store: store,
+  router: router
 }).$mount('#app')
 

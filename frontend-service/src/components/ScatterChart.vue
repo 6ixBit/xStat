@@ -1,11 +1,11 @@
 <template>
     <div id="chart">
         <apexchart type="scatter" width="100%" height="350" :options="chartOptions" :series="series"></apexchart>
-        <p>{{this.league}}</p>
     </div>
 </template>
 
 <script>
+// Third party imports
 import VueApexCharts from 'vue-apexcharts'
 import axios from 'axios'
 

@@ -1,7 +1,7 @@
 <template>
     <b-container class="bv-example-row">
 
-      <b-row align-h="center" align-v="center"> <!-- GENERSL INFO -->
+      <b-row align-h="center" align-v="center"> <!-- GENERAL INFO -->
         <b-col cols="12" md="8"> It has survived not only five centuries,
            but also the leap into electronic typesetting, 
            remaining essentially unchanged. It was popularised in the 
