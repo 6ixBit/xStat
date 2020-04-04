@@ -3,7 +3,6 @@
 
 # Third party imports
 import pandas as pd
-from pprint import pprint
 from flask import jsonify
 
 # Local application imports

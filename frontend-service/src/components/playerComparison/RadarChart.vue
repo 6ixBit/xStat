@@ -1,21 +1,21 @@
 <template>
     <div> 
-        1st Position: {{ playerInfo[0].position }} <br>
-        2nd Position: {{ playerInfo[1].position }}
         <!-- Res: {{ playerInfo }} -->
         <!-- <radar-chart/> -->
+        Length of Player Info: {{ this.playerInfo.length }}
     </div>
 </template>
 
 <script>
-// Third party imports
+import axios from 'axios'
 // import VueApexCharts from 'vue-apexcharts'
 
 export default {
     data() {
         return {
             series: [],
-            chartOptions: {}
+            chartOptions: {},
+            playerInfo: []
         }
     },
     components: {
@@ -27,9 +27,24 @@ export default {
         },
         selectedPlayers(){
             return this.$store.state.selectedPlayers;
+        }
+    },
+    methods: {
+        async getPlayers(players){
+            this.clearPlayerInfo()
+
+            try {
+               for (var player of players) {
+                   const info = await axios.get(`http://localhost:8082/api/v1/players/${player}`)
+
+                   this.playerInfo.push(info.data[0])
+               }
+           }  catch (error) {
+               console.log(`Failed: ${error}`)
+           }
         },
-        playerInfo(){
-            return this.$store.state.playerInfo;
+        async clearPlayerInfo() {
+            this.playerInfo = []
         }
     },
     watch: {
@@ -37,14 +52,16 @@ export default {
             console.log(`Radar Chart ${newData} - ${oldData}`)
         },
         selectedPlayers(newData) { 
-            console.log(newData)
-            
-            // REQUEST current players and add them to playersInfo global
-            this.$store.dispatch('getPlayers')   
-            
+
+            // Add players to central repo
+            this.getPlayers(newData);
+            console.log(this.playerInfo.length)
+
+            // STORE FUNCTIONALITY HERE
+            //this.$store.dispatch('getPlayers')   
             // Update Radar Chart on Selected players changed
-            this.$store.commit('clearRadarChart')
-            this.$store.commit('updateRadarChart')
+            //this.$store.commit('clearRadarChart')
+            //this.$store.commit('updateRadarChart')
         }
     }
 }
