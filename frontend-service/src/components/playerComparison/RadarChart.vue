@@ -48,9 +48,9 @@ export default {
         },
         async clearRadarChart() {
             this.chartOptions = {};
-            this.series = [];
+            this.chartSeries = [];
         },
-        async updateRadarChart() {
+        updateRadarChart() {
             // Clear Radar Chart Data
             this.clearRadarChart()
 
@@ -68,10 +68,9 @@ export default {
     watch: {
         selectedPlayers(newData) { 
             // Add players to central repo
-            this.getPlayers(newData);
-            
-            // Update Chart With New Player Data
-            this.updateRadarChart()
+            this.getPlayers(newData)
+            .then( () => { this.updateRadarChart() }) // Update Charts.
+
         }
     }
 }
