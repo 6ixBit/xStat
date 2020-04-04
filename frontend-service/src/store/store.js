@@ -43,13 +43,9 @@ export const store = new Vuex.Store({
             state.radarChartOptions = {}
         },
         updateRadarChart(state) {
-            // Check if current player is empty
-             //if( state.playerInfo === [] ) { return [] }
-
             // Loop players and add data to series
             state.playerInfo.forEach( (player) => {
-                console.log(player)
-
+              
                 let series = {
                     name: `${player.player_name} - ${player.season}`,
                     data: [player.dribbleSuccess_per90, player.goals_per90, 

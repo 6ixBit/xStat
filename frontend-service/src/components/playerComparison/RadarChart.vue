@@ -1,8 +1,10 @@
 <template>
     <div> 
         <!-- Res: {{ playerInfo }} -->
-        <!-- <radar-chart/> -->
-        Length of Player Info: {{ this.playerInfo.length }}
+        <!-- <radar-chart type="radar" height="350" :options="chartOptions" :series="chartSeries"/> -->
+        Length of Player Info: {{ this.playerInfo.length }} <br>
+        Radar: {{ this.chartSeries }}
+
     </div>
 </template>
 
@@ -13,7 +15,7 @@ import axios from 'axios'
 export default {
     data() {
         return {
-            series: [],
+            chartSeries: [],
             chartOptions: {},
             playerInfo: []
         }
@@ -22,15 +24,13 @@ export default {
         // 'radarChart' : VueApexCharts
     },
     computed: {
-        radarChartSeries(){
-            return this.$store.state.radarChartSeries;
-        },
         selectedPlayers(){
             return this.$store.state.selectedPlayers;
         }
     },
     methods: {
         async getPlayers(players){
+            // Clear playerInfo to remove duplicates
             this.clearPlayerInfo()
 
             try {
@@ -45,23 +45,33 @@ export default {
         },
         async clearPlayerInfo() {
             this.playerInfo = []
+        },
+        async clearRadarChart() {
+            this.chartOptions = {};
+            this.series = [];
+        },
+        async updateRadarChart() {
+            // Clear Radar Chart Data
+            this.clearRadarChart()
+
+            for (var player of this.playerInfo) { // NOT WORKING 
+                    let newSeries = {
+                        name: `${player.player_name} - ${player.season}`,
+                        data: [player.dribbleSuccess_per90, player.goals_per90, 
+                                player.keyPasses_per90, player.shots_on_target_p90,
+                                player.assists_per90]
+                            }
+                    this.chartSeries.push(newSeries)
+            }
         }
     },
     watch: {
-        radarChartSeries(newData, oldData) { // IF Chart data changes then render chart.
-            console.log(`Radar Chart ${newData} - ${oldData}`)
-        },
         selectedPlayers(newData) { 
-
             // Add players to central repo
             this.getPlayers(newData);
-            console.log(this.playerInfo.length)
-
-            // STORE FUNCTIONALITY HERE
-            //this.$store.dispatch('getPlayers')   
-            // Update Radar Chart on Selected players changed
-            //this.$store.commit('clearRadarChart')
-            //this.$store.commit('updateRadarChart')
+            
+            // Update Chart With New Player Data
+            this.updateRadarChart()
         }
     }
 }
