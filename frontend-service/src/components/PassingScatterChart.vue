@@ -92,7 +92,7 @@ export default {
     },
     watch: {
       league: async function (newVal) { // Watch for league prop being changed.
-        const newResult = await axios.get(`http://localhost:8081/api/v1/stats/goals/${newVal}`)
+        const newResult = await axios.get(`http://localhost:8081/api/v1/stats/passes/${newVal}`)
 
         var finalPlayerData = []
 
