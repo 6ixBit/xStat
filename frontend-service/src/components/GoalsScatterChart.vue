@@ -57,13 +57,13 @@ export default {
               }
             },
             title: {
-              text: `${res.data[0].competition} - ${res.data[0].season}`,
+              text: `⚽ Goals vs Minutes Played: ${res.data[0].competition} (${res.data[0].season})`,
               align: 'left'
             },
             xaxis: {
               tickAmount: 10,
               title : {
-                text: "Goals",
+                text: "⚽ Goals",
               },
               labels: {
                 formatter: function(val) {
@@ -121,14 +121,14 @@ export default {
                 type: 'xy'
               }
             },
-            title: {
-              text: `${newResult.data[0].competition} - ${newResult.data[0].season}`,
+            title: { 
+              text: `⚽ Goals vs Minutes Played: ${newResult.data[0].competition} (${newResult.data[0].season})`,
               align: 'left'
             },
             xaxis: {
               tickAmount: 10,
               title : {
-                text: "Goals"
+                text: "⚽ Goals"
               },
               labels: {
                 formatter: function(val) {

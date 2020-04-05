@@ -23,7 +23,7 @@
         </b-col>
 
         <b-col md="6">
-         <!-- <scatter :chartData="series"/> -->
+         <passes-scatter :league="currentLeague"/>
         </b-col>
       </b-row>
 
@@ -31,12 +31,14 @@
 </template>
 
 <script>
-import ScatterChart from "./ScatterChart"
+import GoalsScatterChart from "./GoalsScatterChart"
+import PassesScatterChart from "./PassingScatterChart"
 import SelectMenu from './SelectLeague'
 
 export default {
     components : {
-      "scatter" : ScatterChart,
+      "scatter" : GoalsScatterChart,
+      "passes-scatter": PassesScatterChart,
       "select-league" : SelectMenu
     },
     data(){

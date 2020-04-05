@@ -23,14 +23,11 @@
       <br> <!-- CHARTS -->
       <b-row>
         <b-col md="6">
-         It has survived not only five centuries,
-           but also the leap into electronic typesetting, 
-           remaining essentially unchanged. It was popularised in the 
-           1960s with the release of Letraset sheets containing Lorem Ipsum passages.
+         <player-panel/>
         </b-col>
 
         <br>
-        <b-col md="6">
+        <b-col md="6"> <br>
          It has survived not only five centuries,
            but also the leap into electronic typesetting, 
            remaining essentially unchanged. It was popularised in the 
@@ -44,11 +41,13 @@
 <script>
 import SearchBar from './SearchBar'
 import RadarChart from './RadarChart'
+import PlayerPanel from './PlayerPanel'
 
 export default {
     components: {
         "search-bar": SearchBar,
-        "radar-chart": RadarChart
+        "radar-chart": RadarChart,
+        "player-panel": PlayerPanel
     } 
 }
 </script>
