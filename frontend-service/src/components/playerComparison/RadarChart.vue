@@ -1,6 +1,5 @@
 <template>
   <div>
-    Length of Player Info: {{ this.playerInfo.length }} <br />
     <radar-chart type="radar" height="350" :options="chartOptions" :series="chartSeries"/>
   </div>
 </template>

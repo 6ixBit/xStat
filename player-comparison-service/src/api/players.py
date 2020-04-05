@@ -37,6 +37,8 @@ def search_player(first_name:str):
     @param first_name - First name of player to search for
     @return [{}] list of dicts
     '''
+    if first_name == '' or None:
+        return []
 
     matched_players = collection.find(
         {"first_name": {"$regex" : first_name}}
@@ -53,9 +55,11 @@ def search_player(first_name:str):
         del player['League']
 
         players.append(player)
+    
+    limitedPlayers = players[:10]
 
     return {
         "results": matched_players.count(),
-        "players": players
+        "players": limitedPlayers
     }
 
