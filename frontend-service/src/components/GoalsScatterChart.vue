@@ -76,13 +76,6 @@ export default {
               title : {
                 text: "Minutes played"
               }
-            },
-            tooltip: {
-              x: {
-                formatter: function(value) {
-                  return "Goals:  " + playerName + '' + value;
-                }
-              }
             }
           }            
         } catch (e) {

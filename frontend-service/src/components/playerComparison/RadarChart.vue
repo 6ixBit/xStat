@@ -1,12 +1,15 @@
 <template>
   <div>
     <radar-chart type="radar" height="350" :options="chartOptions" :series="chartSeries"/>
+    <br>
+    <player-panel :Players="playerInfo"/>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import VueApexCharts from 'vue-apexcharts'
+import VueApexCharts from 'vue-apexcharts';
+import PlayerPanel from './PlayerPanel';
 
 export default {
   data() {
@@ -17,7 +20,8 @@ export default {
     };
   },
   components: {
-    'radar-chart' : VueApexCharts
+    'radar-chart' : VueApexCharts,
+    'player-panel': PlayerPanel
   },
   computed: {
     selectedPlayers() {

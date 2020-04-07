@@ -32,13 +32,13 @@
 
 <script>
 import GoalsScatterChart from "./GoalsScatterChart"
-import PassesScatterChart from "./PassingScatterChart"
+import DribbleScatterChart from "./DribbleScatterChart"
 import SelectMenu from './SelectLeague'
 
 export default {
     components : {
       "scatter" : GoalsScatterChart,
-      "passes-scatter": PassesScatterChart,
+      "passes-scatter": DribbleScatterChart,
       "select-league" : SelectMenu
     },
     data(){

@@ -23,7 +23,7 @@ export default {
     async created(){
         try {
             // Make request to general micro service to fetch goals stats on load of page.
-            const res = await axios.get(`http://localhost:8081/api/v1/stats/passes/${this.league}`)
+            const res = await axios.get(`http://localhost:8081/api/v1/stats/dribbles/${this.league}`)
 
             var playerData = [] 
             
@@ -35,7 +35,7 @@ export default {
               let temp_player_data = []
               
               // Add specific player info to array
-              temp_player_data.push(player.assists)
+              temp_player_data.push(player.dribble_success)
               temp_player_data.push(player.minutes_played)
               playerName.push(player.player_name)
 
@@ -57,13 +57,13 @@ export default {
               }
             },
             title: {
-              text: `🎯 Assists vs Minutes Played: ${res.data[0].competition} (${res.data[0].season})`,
+              text: `🎩 Dribbles vs Minutes Played: ${res.data[0].competition} (${res.data[0].season})`,
               align: 'left'
             },
             xaxis: {
               tickAmount: 10,
               title : {
-                text: "🎯 Assists",
+                text: "🎩 Dribbles Completed",
               },
               labels: {
                 formatter: function(val) {
@@ -77,12 +77,8 @@ export default {
                 text: "Minutes played"
               }
             },
-            tooltip: {
-              x: {
-                formatter: function(value) {
-                  return "Goals:  " + playerName + '' + value;
-                }
-              }
+            markers: {
+              colors: ['#F44336', '#E91E63', '#9C27B0']
             }
           }            
         } catch (e) {
@@ -92,7 +88,7 @@ export default {
     },
     watch: {
       league: async function (newVal) { // Watch for league prop being changed.
-        const newResult = await axios.get(`http://localhost:8081/api/v1/stats/passes/${newVal}`)
+        const newResult = await axios.get(`http://localhost:8081/api/v1/stats/dribbles/${newVal}`)
 
         var finalPlayerData = []
 
@@ -100,7 +96,7 @@ export default {
         newResult.data.forEach(player => {
           let playerData = []
 
-          playerData.push(player.goals) // Push results to array
+          playerData.push(player.dribble_success) // Push results to array
           playerData.push(player.minutes_played)
 
           finalPlayerData.push(playerData)
@@ -122,13 +118,13 @@ export default {
               }
             },
             title: { 
-              text: `🎯 Assists vs Minutes Played: ${newResult.data[0].competition} (${newResult.data[0].season})`,
+              text: `🎩 Dribbles vs Minutes Played: ${newResult.data[0].competition} (${newResult.data[0].season})`,
               align: 'left'
             },
             xaxis: {
               tickAmount: 10,
               title : {
-                text: " 🎯 Assists"
+                text: "🎩 Dribbles completed"
               },
               labels: {
                 formatter: function(val) {

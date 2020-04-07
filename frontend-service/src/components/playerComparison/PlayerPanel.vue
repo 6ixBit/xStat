@@ -1,27 +1,34 @@
 <template>
   <div>
-    <b-card
-      no-body
-      style="max-width: 20rem;"
-      img-src="https://placekitten.com/380/200"
-      img-alt="Image"
-      img-top
-    >
-      <template v-slot:header>
-        <h4 class="mb-0">De Bruyne</h4>
-      </template>
+    <b-container class="bv-example-row">
+    
+        <b-card no-body style="max-width: 20rem;" 
+        v-for="player in Players" :key="player.id">
 
-      <b-list-group flush>
-        <b-list-group-item>Goals: 10</b-list-group-item>
-        <b-list-group-item>Dapibus ac facilisis in</b-list-group-item>
-        <b-list-group-item>Vestibulum at eros</b-list-group-item>
-      </b-list-group>
+          <template v-slot:header>
+            <h4 class="mb-0"> {{player.player_name}}, {{ player.age }} </h4>
+          </template>
 
-      <b-card-body>
-        <a href="#" class="card-link">Card link</a>
-        <a href="#" class="card-link">Another link</a>
-      </b-card-body>
+          <b-list-group flush>
+            <b-list-group-item>{{player.team_name}}</b-list-group-item>
+            <b-list-group-item>Goals: {{ player.goals }}</b-list-group-item>
+            <b-list-group-item>Assists: {{player.assists}}</b-list-group-item>
+            <b-list-group-item>Pass Accuracy: {{player.pass_accuracy}}%</b-list-group-item>
+            <b-list-group-item>Minutes Played: {{ player.minutes_played }}</b-list-group-item>
+          </b-list-group>
 
-    </b-card>
+          <b-card-body>
+            <a href="#" class="card-link">View Profile</a>
+          </b-card-body>
+        </b-card>
+
+    </b-container>
   </div>
+  
 </template>
+
+<script>
+export default {
+  props: ['Players'] // Player Info From Radar Component
+}
+</script>
