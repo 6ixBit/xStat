@@ -24,10 +24,15 @@ headers = {
 }
 
 def get_teams(league_id: int) -> list:
-    ''' 
-    @desc Grab all teams from a specific league 
-    @param league_id - ID of the league in the API to get.
-    '''
+    """
+    - Grab all teams from a specific league
+    
+    Arguments:
+        league_id {int} -- ID of the league in the API to get.
+    
+    Returns:
+        list -- Fetched teams as a list.
+    """
     global headers
     url = f"https://api-football-v1.p.rapidapi.com/v2/teams/league/{league_id}"
     response = requests.get(url, headers=headers).json()
@@ -36,16 +41,22 @@ def get_teams(league_id: int) -> list:
     teams = [ value['teams'] for key,value in response.items() ]
 
     # Parse team_ids from each team within the league
-    team_ids = [ element['team_id'] for index,element in enumerate(teams[0]) ]     
+    team_ids = [ element['team_id'] for index, element in enumerate(teams[0]) ]     
     return team_ids
 
 def get_players_id(team_id: int, season="2019-2020") -> list:
-    ''' 
-    @desc Get stats for all players of each team passed as a parameter OR get all player ids for a team and return it in a list
-    @param team_id - ID of the team in the API to get.
-    @param season - (YYYY or YYYY-YYYY : 2019 or 2019-2020)
-    @return A list of player ids from a specific team.
-    '''
+    """
+    - Get stats for all players of each team passed as team_id 
+    
+    Arguments:
+        team_id {int} -- ID of team to get player ids for.
+    
+    Keyword Arguments:
+        season {str} -- Season of player stats to get. (default: {"2019-2020"})
+    
+    Returns:
+        list -- Fetched players ids as a list
+    """    
     global headers
     url = f"https://api-football-v1.p.rapidapi.com/v2/players/squad/{team_id}/{season}"
     
@@ -58,12 +69,18 @@ def get_players_id(team_id: int, season="2019-2020") -> list:
     return player_ids
 
 def get_player_stats(player_id: int, league="Serie A") -> list:
-    '''
-    @desc Get stats for each player and filter by params on link.
-    @param (644) player_id - Player id of a specific player.
-    @param ("Premier League") league - What league to filter stats by.
-    @return List which contains a dict of the players stats.
-    '''
+    """
+    - Get stats for each player and filter by params on link.
+    
+    Arguments:
+        player_id {int} -- Player id of a specific player.
+    
+    Keyword Arguments:
+        league {str} -- What league to filter stats by. (default: {"Serie A"})
+    
+    Returns:
+        list -- List which contains a dictionary of the players stats.
+    """    
     global headers
     url = f"https://api-football-v1.p.rapidapi.com/v2/players/player/{player_id}"
     
@@ -77,9 +94,13 @@ def get_player_stats(player_id: int, league="Serie A") -> list:
     return player_stats
 
 def write_to_db(player_stat):
-    '''
-    @desc Accepts a player stat object in list format and inserts it into database
-    '''
+    """
+    - Accepts a player stat object in list format and inserts it into database
+    
+    Arguments:
+        player_stat {object} -- Player object to submit
+    """    
+  
     my_client = pymongo.MongoClient(Config.MONGO_URL)
 
     my_db = my_client['xStat']
