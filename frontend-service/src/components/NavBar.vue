@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="navBar">
        <b-navbar toggleable="lg" type="dark" variant="dark">
      <router-link to='/'> <b-navbar-brand to='/'>xStat</b-navbar-brand> </router-link>
 
@@ -25,12 +25,12 @@
 </template>
 
 <script>
-export default {
-    
-}
+export default {}
 </script>
 
 <style scoped>
-
+.navbar {
+    margin-bottom: 8px;
+}
 
 </style>
