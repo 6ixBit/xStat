@@ -1,42 +1,50 @@
 import express from "express"
-import axios from "axios";
+import axios from "axios"
 import fetch from "node-fetch"
 
 const app = express()
+app.use(express.json())
 
 // Available services
 const services = {
-    "frontend-service": "http://google.com",
-    "general-service": "http://amazon.com",
-    "player-comparison-service": "http://facebook.com"
+    "frontend-service": "https://www.google.com",
+    "general-service": "https://www.amazon.com",
+    "player-comparison-service": "https://www.facebook.com"
 }
 
-// @desc Endpoints fr server
-app.get("/monitor", (req, res) => {
+// @desc Endpoints for server
+app.get("/monitor", async (req, res) => {
 
     var monitoredServices = {} 
+    try {
+        for (let serviceName in services) {
+            let serviceURL = services[serviceName]
 
-    for (let serviceName in services) {
-        let serviceURL = services[serviceName]
-
-        const result = pingService(serviceURL)
-        monitoredServices[serviceName] = result || false // Undefined, for some reason?
+            const result = await pingService(serviceURL)
+            monitoredServices[serviceName] = await result
+        }
+        res.status(200).json(monitoredServices)
+    } catch(err) {
+        console.log(err)
     }
-
-    res.status(200).json(monitoredServices)
 })
 
 // @desc Ping other services.
-function pingService (url) {
-    fetch(url)
-    .then( (response) => {
+async function pingService (url) {
+
+    try {
+        const response = await axios.get(url)
+    
         if(response.status == 200) {
-            return { url: true }
+            return "up"
         } else {
-            return { url: false }
-        } 
-    })
-    .catch( (err) => {console.log(err)})
+            return "down" 
+        }  
+    } catch (err) {
+        console.log(err)
+        return "down"
+    }
+    
  }
 
-app.listen(5000, () => {console.log(`Listening on port: 5000`)})
+app.listen(5001, () => {console.log(`Listening on port: 5001`)})

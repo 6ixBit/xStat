@@ -40,3 +40,11 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+    p {
+        text-align: center;
+        color: #2c3e50;
+    }
+</style>
+

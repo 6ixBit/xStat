@@ -1,8 +1,9 @@
 <template>
-  <div>
-    <b-container class="bv-example-row">
+  <div class="playerPanel">
+    <b-container class="bv-example-row" style="display: flex;
+          align-items: center; width: 180%;">
     
-        <b-card no-body style="max-width: 20rem;" 
+        <b-card no-body style="max-width: 21rem; margin: 5px;" 
         v-for="player in Players" :key="player.id">
 
           <template v-slot:header>
@@ -17,9 +18,6 @@
             <b-list-group-item>Minutes Played: {{ player.minutes_played }}</b-list-group-item>
           </b-list-group>
 
-          <b-card-body>
-            <a href="#" class="card-link">View Profile</a>
-          </b-card-body>
         </b-card>
 
     </b-container>
@@ -32,3 +30,6 @@ export default {
   props: ['Players'] // Player Info From Radar Component
 }
 </script>
+
+
+

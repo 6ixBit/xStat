@@ -45,7 +45,6 @@
 import SearchBar from './SearchBar'
 import RadarChart from './RadarChart'
 
-
 export default {
     components: {
         "search-bar": SearchBar,
