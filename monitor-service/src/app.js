@@ -1,9 +1,10 @@
 import express from "express"
 import axios from "axios"
-import fetch from "node-fetch"
+import cors from "cors"
 
 const app = express()
 app.use(express.json())
+app.use(cors())
 
 // Available services
 const services = {
@@ -46,4 +47,4 @@ async function pingService (url) {
     }
  }
 
-app.listen(5001, () => {console.log(`Listening on port: 5000`)})
+app.listen(5000, () => {console.log(`Listening on port: 5000`)})
