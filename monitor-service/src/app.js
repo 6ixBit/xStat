@@ -7,9 +7,9 @@ app.use(express.json())
 
 // Available services
 const services = {
-    "frontend-service": "https://www.google.com",
-    "general-service": "https://www.amazon.com",
-    "player-comparison-service": "https://www.facebook.com"
+    "frontend-service": "http://localhost:8080/",
+    "general-service": "http://localhost:8081/api/v1/stats/leagues",
+    "player-comparison-service": "http://localhost:8082/api/v1/players/J. Milner"
 }
 
 // @desc Endpoints for server
@@ -21,7 +21,7 @@ app.get("/monitor", async (req, res) => {
             let serviceURL = services[serviceName]
 
             const result = await pingService(serviceURL)
-            monitoredServices[serviceName] = await result
+            monitoredServices[serviceName] = result
         }
         res.status(200).json(monitoredServices)
     } catch(err) {
@@ -44,7 +44,6 @@ async function pingService (url) {
         console.log(err)
         return "down"
     }
-    
  }
 
-app.listen(5001, () => {console.log(`Listening on port: 5001`)})
+app.listen(5001, () => {console.log(`Listening on port: 5000`)})

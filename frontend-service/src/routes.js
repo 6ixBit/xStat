@@ -1,5 +1,6 @@
 import playerComparison from './views/playerComparison'
 import Home from './components/Home'
+import Monitor from "./views/Monitor"
 
 export default [
     {
@@ -11,5 +12,10 @@ export default [
         name: 'Home',
         path: '/',
         component: Home
+      },
+      {
+        name: "Monitor",
+        path: "/monitor",
+        component: Monitor
       }
 ]
