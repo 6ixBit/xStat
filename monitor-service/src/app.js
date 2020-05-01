@@ -8,13 +8,13 @@ app.use(cors())
 
 // Available services
 const services = {
-    "frontend-service": "http://localhost:8080/",
-    "general-service": "http://localhost:8081/api/v1/stats/leagues",
-    "player-comparison-service": "http://localhost:8082/api/v1/players/J. Milner"
+    "frontend-service": "http://frontend:8080/",
+    "general-service": "http://general-service:8081/api/v1/stats/leagues/",
+    "player-comparison-service": "http://player-comparison-service:8082/api/v1/players/J. Milner/"
 }
 
 // @desc Endpoints for server
-app.get("/monitor", async (req, res) => {
+app.get("/monitor", cors(), async (req, res) => {
 
     var monitoredServices = {} 
     try {
@@ -37,13 +37,13 @@ async function pingService (url) {
         const response = await axios.get(url)
     
         if(response.status == 200) {
-            return "up"
+            return "Up"
         } else {
-            return "down" 
+            return "Down" 
         }  
     } catch (err) {
         console.log(err)
-        return "down"
+        return "Down"
     }
  }
 

@@ -35,6 +35,17 @@ services:
         ports:
             - 8083:5000
         restart: always
+
+    frontend-service-2: 
+        build: ./frontend-service-2
+        volumes:
+            - ./frontend-service-2:/app
+        ports: 
+            - 8084:8080
+        depends_on: 
+            - general-service
+            - player-comparison-service
+        restart: always
         
 
             

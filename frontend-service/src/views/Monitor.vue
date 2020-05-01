@@ -55,7 +55,7 @@ export default {
                     "Status" : this.serviceStatus[service] 
                 })
             }
-            return formattedServices 
+           return formattedServices 
         }
     }
 }

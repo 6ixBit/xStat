@@ -20,24 +20,6 @@
         </b-col>
       </b-row>
 
-      <br> <!-- CHARTS -->
-      <b-row>
-        <b-col md="6">
-          It has survived not only five centuries,
-           but also the leap into electronic typesetting, 
-           remaining essentially unchanged. It was popularised in the 
-           1960s with the release of Letraset sheets containing Lorem Ipsum passages.
-        </b-col>
-
-        <br>
-        <b-col md="6"> <br>
-         It has survived not only five centuries,
-           but also the leap into electronic typesetting, 
-           remaining essentially unchanged. It was popularised in the 
-           1960s with the release of Letraset sheets containing Lorem Ipsum passages.
-        </b-col>
-      </b-row>
-
     </b-container>
 </template>
 
