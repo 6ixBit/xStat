@@ -1,15 +1,22 @@
 <template>
   <div>
+    <div class="autocompleteWrapper">
     <AutoComplete
         v-model="text"
-        :data="players"
         @on-search="OnChange"
-        placeholder="Search for a player"
-        style="width:200px"></AutoComplete>
-
-      <div> <!-- SELECTED PLAYER -->
-      <b-badge pill variant="primary" v-for="selected in selectedPlayers" :key="selected.id" @click="removePlayer(selected)"> {{selected}} </b-badge> 
+        @on-select="addPlayer"
+        placeholder="Search for a player..."
+        style="width:200px">
+  
+        <Option v-for="player in players" :value="player.player_name" :key="player.id" >{{player.player_name}} - {{player.competition}}</Option>
+        </AutoComplete>
       </div>
+
+      <div class="playerTags"> <!-- Remove players when done. -->
+        <Tag>标签二</Tag>
+      </div>
+
+      Boom pow: {{ selectedPlayers }}
 
   </div>
 </template>
@@ -34,7 +41,6 @@ import axios from 'axios'
       async OnChange() {
           this.players = []
 
-          //@desc Make AJAX call to backend for search potential results
         try {
             const matched_players = await axios.get(`http://localhost:8082/api/v1/players/search/${this.text}`)
 
@@ -43,7 +49,7 @@ import axios from 'axios'
 
             // Append matched results to component data
             for (var player of matched_players.data.players) {
-                this.players.push(`${player.player_name} - ${player.competition}`)
+                this.players.push(player)
             }
   
             } catch (error) {
@@ -52,6 +58,8 @@ import axios from 'axios'
           }
       },
       addPlayer(player) {
+        console.log(player) // Remove when done.
+
         // Mutate state to add player in store 
         this.$store.commit('addPlayer', player)
       },
@@ -64,16 +72,7 @@ import axios from 'axios'
 </script>
 
 <style scoped>
-  .searchList {
-    cursor: pointer;
-  }
-
-  .Listed {
-    position: absolute;
-    z-index: 5;
-  }
-
-  .searchList:hover {
-    background-color: #0080ff
-  }
+ .playerTags {
+   margin: 5px 5px;
+ }
 </style>

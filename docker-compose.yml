@@ -37,9 +37,9 @@ services:
         restart: always
 
     frontend-service-2: 
-        build: ./frontendservice-2
+        build: ./frontend-service-2
         volumes:
-            - ./frontendservice-2:/app
+            - ./frontend-service-2:/app
         ports: 
             - 8084:8080
         depends_on: 
