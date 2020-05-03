@@ -1,54 +1,34 @@
 <template>
   <div>
-    <radar-chart type="radar" height="350" :options="chartOptions" :series="chartSeries"/>
-    <br>
-    <player-panel :Players="playerInfo"/>
+    <radar-chart></radar-chart>
+    {{playerInfo}}
   </div>
 </template>
 
 <script>
-import axios from "axios";
-import VueApexCharts from 'vue-apexcharts';
-import PlayerPanel from './PlayerPanel';
+import Radar from "../Charts/RadChart"
 
 export default {
   data() {
     return {
-      chartSeries: [],
-      chartOptions: {},
-      playerInfo: []
+      loaded: false,
+      chartdata: null,
+      options: {}
     };
   },
   components: {
-    'radar-chart' : VueApexCharts,
-    'player-panel': PlayerPanel
+    'radar-chart' : Radar,
   },
   computed: {
     selectedPlayers() {
       return this.$store.state.selectedPlayers;
+    },
+    playerInfo() {
+      return this.$store.state.playerInfo;
     }
   },
   methods: {
-    async getPlayers(players) {
-      // Clear playerInfo to remove duplicates
-      this.clearPlayerInfo();
-
-      try {
-        for (var player of players) {
-          const info = await axios.get(
-            `http://localhost:8082/api/v1/players/${player}`
-          );
-
-          this.playerInfo.push(info.data[0]);
-        }
-      } catch (error) {
-        console.log(`Failed: ${error}`);
-      }
-    },
-    async clearPlayerInfo() {
-      this.playerInfo = [];
-    },
-    async clearRadarChart() {
+    clearRadarChart() {
       this.chartOptions = {};
       this.chartSeries = [];
     },
@@ -102,10 +82,13 @@ export default {
   },
   watch: {
     selectedPlayers(newData) {
+      this.$store.commit("clearPlayerInfo")
+      this.$store.commit("getPlayers")
+
       // Fetch searched players then update chart
-      this.getPlayers(newData).then(() => {
-        this.updateRadarChart(this.playerInfo);
-      });
+      // this.getPlayers(newData).then(() => {
+      //   this.updateRadarChart(this.playerInfo);
+      // });
     }
   }
 };

@@ -13,7 +13,7 @@
       </div>
 
       <div class="playerTags"> <!-- Remove players when done. -->
-        <Tag closable @on-close="removePlayer(selected)" v-for="selected in selectedPlayers" :key="selected.id">{{selected}}</Tag>
+        <Tag color="primary" closable @on-close="removePlayer(selected)" v-for="selected in selectedPlayers" :key="selected.id">{{selected}}</Tag>
       </div>
   </div>
 </template>

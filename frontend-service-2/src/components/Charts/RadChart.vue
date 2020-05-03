@@ -1,8 +1,8 @@
 <script>
-import { Scatter } from "vue-chartjs";
+import { Radar } from "vue-chartjs";
 
 export default {
-  extends: Scatter,
+  extends: Radar,
   props: {
     chartdata: {
       type: Object,

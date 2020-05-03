@@ -21,11 +21,13 @@
     </div>
 
     <div class="chartWrapper">
+
     <Row type="flex" justify="center">
         <i-col span="24">
-           Im HERE. 
+           <radar-chart></radar-chart>
         </i-col>
     </Row>
+    
     </div>
 
   </div>
@@ -34,12 +36,12 @@
 
 <script>
 import SearchBar from './SearchBar'
-//import RadarChart from './RadarChart'
+import RadarChart from './RadarChartContainer'
 
 export default {
     components: {
-        "search-bar": SearchBar
-        //"radar-chart": RadarChart
+        "search-bar": SearchBar,
+        "radar-chart": RadarChart
     } 
 }
 </script>
