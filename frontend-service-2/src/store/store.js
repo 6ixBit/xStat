@@ -27,7 +27,7 @@ export const store = new Vuex.Store({
             if (state.selectedPlayers.length >= 2) {
                 alert("You can not add more than 2 players")
             } else {
-                state.selectedPlayers.push(player.player_name)
+                state.selectedPlayers.push(player)
             }
         }
     }
