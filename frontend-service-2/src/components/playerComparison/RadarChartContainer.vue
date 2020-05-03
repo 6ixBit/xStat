@@ -37,14 +37,15 @@ export default {
     },
     updateRadarChart() {
       this.loaded = false;
+      this.chartdata = this.formatOffensivePlayerData      
 
       try {
-        this.chartdata = this.formatOffensivePlayerData
-
         this.options = {
           tooltips: {
             mode: 'label'
-          }
+          },
+          responsive: true,
+          maintainAspectRatio: false
         }
         this.loaded = true;
       } catch (error) {
@@ -61,6 +62,9 @@ export default {
       this.clearRadarChart();
       this.updateRadarChart();
     }
+  },
+  mounted() { // REMOVE 
+    this.updateRadarChart()
   }
 };
 </script>

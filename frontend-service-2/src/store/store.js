@@ -20,7 +20,9 @@ export const store = new Vuex.Store({
 
                 players.push({
                     label: `${player.player_name} - ${player.season}`, 
-                    data: [dribbleSuccess_per90, goals_per90, keyPasses_per90, shots_on_target_p90, assists_per90]
+                    data: [dribbleSuccess_per90, goals_per90, keyPasses_per90, shots_on_target_p90, assists_per90],
+                    pointBackgroundColor: "#a432a8",
+                    backgroundColor: "#a432a8"
                 })
            })
 
