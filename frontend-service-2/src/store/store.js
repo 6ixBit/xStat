@@ -11,6 +11,25 @@ export const store = new Vuex.Store({
         selectedPlayers: [], // PLAYER NAMES OF THOSE SELECTED
         playerInfo: [] // PLAYER INFO FETCHED 
     },
+    getters: {
+        formatOffensivePlayerData: (state) => {
+            let players = []
+
+           state.playerInfo.map( player => {
+                let {dribbleSuccess_per90, goals_per90, keyPasses_per90, shots_on_target_p90, assists_per90} = player
+
+                players.push({
+                    label: `${player.player_name} - ${player.season}`, 
+                    data: [dribbleSuccess_per90, goals_per90, keyPasses_per90, shots_on_target_p90, assists_per90]
+                })
+           })
+
+           return {
+            labels: ["Dribbles", "Goals", "Key Passes","Shots On Target", "Assists"],
+            datasets: players // [{label: hi, data: []}]
+           }
+        }
+    },
     mutations: {
         removePlayer(state, playerName) {
             // @desc Remove player from selected list

@@ -1,12 +1,12 @@
 <template>
   <div>
-    <radar-chart></radar-chart>
-    {{playerInfo}}
+    <div class="radarContainer"><radar-chart v-if="loaded" :chartdata="formatOffensivePlayerData" :options="options"></radar-chart></div>
+    {{ formatOffensivePlayerData }}
   </div>
 </template>
 
 <script>
-import Radar from "../Charts/RadChart"
+import Radar from "../Charts/RadChart";
 
 export default {
   data() {
@@ -17,7 +17,7 @@ export default {
     };
   },
   components: {
-    'radar-chart' : Radar,
+    "radar-chart": Radar
   },
   computed: {
     selectedPlayers() {
@@ -25,71 +25,49 @@ export default {
     },
     playerInfo() {
       return this.$store.state.playerInfo;
+    },
+    formatOffensivePlayerData() {
+      return this.$store.getters.formatOffensivePlayerData
     }
   },
   methods: {
     clearRadarChart() {
-      this.chartOptions = {};
-      this.chartSeries = [];
+      this.chartdata = {};
+      this.options = [];
     },
-    updateRadarChart(players) {
-      // Clear Radar Chart Data
-      this.clearRadarChart();
+    updateRadarChart() {
+      this.loaded = false;
 
-      for (var player of players) {
-        let newSeries = {
-          name: `${player.player_name} - ${player.season}`,
-          data: [
-            player.dribbleSuccess_per90,
-            player.goals_per90,
-            player.keyPasses_per90,
-            player.shots_on_target_p90,
-            player.assists_per90
-          ]
-        };
-        this.chartSeries.push(newSeries);
-      }
+      try {
+        this.chartdata = this.formatOffensivePlayerData
 
-      // Set Chart Options
-      this.chartOptions = {
-        chart: {
-          height: 350,
-          type: "radar",
-          dropShadow: {
-            enabled: true,
-            blur: 1,
-            left: 1,
-            top: 1
+        this.options = {
+          tooltips: {
+            mode: 'label'
           }
-        },
-        title: {
-          text: `xStat Comparison Matrix`
-        },
-        stroke: {
-          width: 0
-        },
-        fill: {
-          opacity: 0.4
-        },
-        markers: {
-          size: 0
-        },
-        xaxis: {
-          categories: ["Dribbles", "Goals", "Key Passes", "Shots On Target", "Assists"]
         }
-      };
+        this.loaded = true;
+      } catch (error) {
+        console.log(error);
+      }
     }
   },
   watch: {
-    selectedPlayers(newData) {
-      this.$store.commit("clearPlayerInfo")
-      this.$store.commit("getPlayers")
+    selectedPlayers() {
+      this.$store.commit("clearPlayerInfo");
+      this.$store.commit("getPlayers");
 
-      // Fetch searched players then update chart
-      // this.getPlayers(newData).then(() => {
-      //   this.updateRadarChart(this.playerInfo);
-      // });
+      // Then Update Chart with Player Info Data.
+      this.clearRadarChart();
+      this.updateRadarChart();
     }
   }
 };
 </script>
+
+<style scoped>
+ .radarContainer{
+   display: flex;
+   justify-content: center;
+ }
+</style>

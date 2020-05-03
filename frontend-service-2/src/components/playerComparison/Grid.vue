@@ -36,7 +36,7 @@
 
 <script>
 import SearchBar from './SearchBar'
-import RadarChart from './RadarChartContainer'
+import RadarChart from './RadarChartContainer' // SWAP OUT TEST CHART AFTER.
 
 export default {
     components: {
