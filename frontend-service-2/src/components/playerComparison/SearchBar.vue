@@ -13,11 +13,8 @@
       </div>
 
       <div class="playerTags"> <!-- Remove players when done. -->
-        <Tag>标签二</Tag>
+        <Tag closable @on-close="removePlayer(selected)" v-for="selected in selectedPlayers" :key="selected.id">{{selected}}</Tag>
       </div>
-
-      Boom pow: {{ selectedPlayers }}
-
   </div>
 </template>
 
@@ -58,8 +55,6 @@ import axios from 'axios'
           }
       },
       addPlayer(player) {
-        console.log(player) // Remove when done.
-
         // Mutate state to add player in store 
         this.$store.commit('addPlayer', player)
       },
