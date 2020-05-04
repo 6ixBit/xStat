@@ -1,7 +1,10 @@
 <template>
   <div>
-    <div class="radarContainer"><radar-chart v-if="loaded" :chartdata="formatOffensivePlayerData" :options="options"></radar-chart></div>
+    <div class="radarContainer">
+      <radar-chart :key="componentKey" v-if="loaded" :chart-data="formatOffensivePlayerData" :options="options"/>
+      </div>
     {{ formatOffensivePlayerData }}
+    key: {{ componentKey }}
   </div>
 </template>
 
@@ -59,11 +62,10 @@ export default {
       this.$store.commit("getPlayers");
 
       // Then Update Chart with Player Info Data.
-      this.clearRadarChart();
       this.updateRadarChart();
     }
   },
-  mounted() { // REMOVE 
+  mounted() { // RENDERS CHART WHEN PAGE IS REFRESHED
     this.updateRadarChart()
   }
 };
