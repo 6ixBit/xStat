@@ -1,7 +1,12 @@
 <template>
+<div>
     <div class="radarContainer">
       <radar-chart v-if="loaded" :chart-data="formatOffensivePlayerData" :options="options" width='340'/>
     </div>
+     <div>
+       <Divider>Stats 📊</Divider>
+     </div>
+</div>
 </template>
 
 <script>

@@ -10,7 +10,7 @@ import axios from "axios"
 import Scatter from "./Charts/ScattChart"
 
 export default {
-  name: "DribbleChartContainer",
+  name: "PassingChartContainer",
   props : ['league'],
   components: {
     "scatter": Scatter
@@ -25,7 +25,7 @@ export default {
       this.loaded = false
 
       try {
-        const res = await axios.get(`http://localhost:8081/api/v1/stats/dribbles/${this.league}`)
+        const res = await axios.get(`http://localhost:8081/api/v1/stats/passes/${this.league}`)
 
         let playerData = [] // HOLDS PLAYER DATA TO BE PLOTTED.
 
@@ -36,7 +36,7 @@ export default {
           let temp_player_data = {}
           
           // Append specific player info to array
-          temp_player_data.x = player.dribble_success
+          temp_player_data.x = player.key_passes
           temp_player_data.y = player.minutes_played
           
           // Append player name to labels
@@ -49,8 +49,8 @@ export default {
           datasets: [{
             label: `${res.data[0].competition} (${res.data[0].season})`,
             data: playerData,
-            pointBackgroundColor: "#2d89ef",
-            backgroundColor: "#2d89ef"
+            pointBackgroundColor: "#ffc40d",
+            backgroundColor: "#ffc40d"
           }]
         }
 
@@ -67,7 +67,7 @@ export default {
             xAxes: [{
               scaleLabel: {
                 display: true,
-                labelString: 'Dribbles Completed',
+                labelString: 'Key Passes',
                 fontSize: 14, 
                 fontStyle: "italic"
               }
@@ -78,13 +78,13 @@ export default {
               label: function(tooltipItem) {
                   var label = labels[tooltipItem.index];
                   
-                  return `${label}: Dribbles: ${tooltipItem.xLabel} Minutes: ${tooltipItem.yLabel}`
+                  return `${label}: Key Passes: ${tooltipItem.xLabel} Minutes: ${tooltipItem.yLabel}`
               }
             }
           },
           title: {
             display: true,
-            text: 'Dribbles 🎩',
+            text: 'Key Passes 🎯',
             fontSize: 14
           },
           legend: {
@@ -109,7 +109,7 @@ export default {
     },
     async updateChart(newLeague) {
         try {
-        const res = await axios.get(`http://localhost:8081/api/v1/stats/dribbles/${newLeague}`)
+        const res = await axios.get(`http://localhost:8081/api/v1/stats/passes/${newLeague}`)
 
         let playerData = [] // HOLDS PLAYER DATA TO BE PLOTTED.
 
@@ -119,7 +119,7 @@ export default {
           let temp_player_data = {}
           
           // Append specific player info to array
-          temp_player_data.x = player.dribble_success
+          temp_player_data.x = player.key_passes
           temp_player_data.y = player.minutes_played
           
           // Append player name to labels
@@ -134,8 +134,8 @@ export default {
           datasets: [{
             label: `${res.data[0].competition} (${res.data[0].season})`,
             data: playerData,
-            pointBackgroundColor: "#2d89ef",
-            backgroundColor: "#2d89ef"
+            pointBackgroundColor: "#ffc40d",
+            backgroundColor: "#ffc40d"
           }]
         }
 
@@ -152,7 +152,7 @@ export default {
             xAxes: [{
               scaleLabel: {
                 display: true,
-                labelString: 'Dribbles Completed',
+                labelString: 'Key Passes',
                 fontSize: 14, 
                 fontStyle: "italic"
               }
@@ -163,13 +163,13 @@ export default {
               label: function(tooltipItem) {
                   var label = labels[tooltipItem.index];
                   
-                  return `${label}: Dribbles: ${tooltipItem.xLabel} Minutes: ${tooltipItem.yLabel}`
+                  return `${label}: Tackles: ${tooltipItem.xLabel} Minutes: ${tooltipItem.yLabel}`
               }
             }
           },
           title: {
             display: true,
-            text: 'Dribbles 🎩',
+            text: 'Key Passes 🎯',
             fontSize: 14
           },
           legend: {

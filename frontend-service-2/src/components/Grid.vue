@@ -21,7 +21,17 @@
 
      <Row type="flex" justify="center">
         <i-col span="12">
-          <scatter :league="currentLeague"/>
+          <goals-scatter :league="currentLeague"/>
+        </i-col>
+
+        <i-col span="12">
+          <dribbles-scatter :league="currentLeague"/>
+        </i-col>
+    </Row>
+
+    <Row type="flex" justify="center">
+        <i-col span="12">
+          <tackles-scatter :league="currentLeague"/>
         </i-col>
 
         <i-col span="12">
@@ -36,12 +46,16 @@
 <script>
 import GoalsScatterChart from "./GoalsScatterChart"
 import DribbleScatterChart from "./DribbleScatterChart"
+import TacklesScatterChart from "./TacklesScatterChart"
+import PassesScatterChart from "./PassingScatterChart"
 import SelectMenu from './SelectLeague'
 
 export default {
     components : {
-      "scatter" : GoalsScatterChart,
-      "passes-scatter": DribbleScatterChart,
+      "goals-scatter" : GoalsScatterChart,
+      "dribbles-scatter": DribbleScatterChart,
+      "tackles-scatter": TacklesScatterChart,
+      "passes-scatter": PassesScatterChart,
       "select-league" : SelectMenu
     },
     data(){

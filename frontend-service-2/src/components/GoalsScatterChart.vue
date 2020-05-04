@@ -84,7 +84,7 @@ export default {
           },
           title: {
             display: true,
-            text: 'Minutes Played vs Goals ⚽',
+            text: 'Goals ⚽',
             fontSize: 14
           },
           legend: {
@@ -170,7 +170,7 @@ export default {
           },
           title: {
             display: true,
-            text: 'Minutes Played vs Goals ⚽',
+            text: 'Goals ⚽',
             fontSize: 14
           },
           legend: {
@@ -200,6 +200,6 @@ export default {
 
 <style scoped>
  .container{
-   margin: 10px 25px;
+   margin: 5px 25px;
  }
 </style>
