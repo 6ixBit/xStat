@@ -6,7 +6,6 @@ import axios from "axios";
 // Init Vuex
 Vue.use(Vuex)
 
-
 let dynamicColors = function(numberOfColors) {
     var r = Math.floor(Math.random() * 255);
     var g = Math.floor(Math.random() * 255);
@@ -31,18 +30,30 @@ export const store = new Vuex.Store({
             let players = []
 
            state.playerInfo.map( player => {
-                let {dribbleSuccess_per90, goals_per90, keyPasses_per90, shots_on_target_p90, assists_per90} = player
+                let {dribbleSuccess_per90, 
+                    goals_per90, 
+                    keyPasses_per90, 
+                    shots_on_target_p90, 
+                    assists_per90,
+                    tacklesCompleted_per90
+                } = player
 
                 players.push({
                     label: `${player.player_name} (${player.season})`, 
-                    data: [dribbleSuccess_per90, goals_per90, keyPasses_per90, shots_on_target_p90, assists_per90],
+                    data: [dribbleSuccess_per90, 
+                            goals_per90, 
+                            keyPasses_per90, 
+                            shots_on_target_p90, 
+                            assists_per90,
+                            tacklesCompleted_per90
+                        ],
                     borderColor: dynamicColors(1)
                 })
            })
 
            return {
-            labels: ["Dribbles", "Goals", "Key Passes","Shots On Target", "Assists"],
-            datasets: players // [{label: hi, data: []}]
+            labels: ["Dribbles", "Goals", "Key Passes","Shots On Target", "Assists", "Tackles"],
+            datasets: players 
            }
         }
     },
