@@ -1,5 +1,5 @@
 <template>
-    <i-menu mode="horizontal" :theme="light" active-name="1">
+    <i-menu mode="horizontal" :theme="light" :active-name='activeMenuItem'>
         <MenuItem name="1" to="/">
             <Icon type="ios-stats" />
             xStat
@@ -10,11 +10,6 @@
             Player Comparison
         </MenuItem>
 
-        <!-- <MenuItem name="3">
-          <Icon type="ios-paper" />
-              About 
-        </MenuItem> -->
-
     </i-menu>
  
 </template>
@@ -23,11 +18,15 @@
     export default {
         data () {
             return {
-                theme1: 'light'
+                currentRoute: this.$router.currentRoute.fullPath,
+                activeMenuItem: "1"
             }
         },
         mounted() {
-            console.log(this.$router.currentRoute.fullPath) // Match active-name with route to get active item.
+            if(this.currentRoute === "/playercomparison") {
+                this.activeMenuItem = "2"
+            }
+
         }
     }
 </script>

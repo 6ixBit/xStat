@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-      <scatter v-if="loaded" :chart-data="chartdata" :options="options" height="180px"
+      <scatter v-if="loaded" :chart-data="chartdata" :options="options" height="180"
        />
   </div>
 </template>
@@ -96,6 +96,7 @@ export default {
           },
           responsive: true
         }
+
         // Data has finished loading so render component.
         this.loaded = true
       } catch (e) {
@@ -132,25 +133,52 @@ export default {
 
         this.chartdata = {
           datasets: [{
-            label: "⚽ Goals vs Minutes Played",
-            data: playerData
+            label: `${res.data[0].competition} (${res.data[0].season})`,
+            data: playerData,
+            pointBackgroundColor: "#a432a8",
+            backgroundColor: "#a432a8"
           }]
         }
 
         this.options = {
           scales: {
-              xAxes: [{
-                  type: 'linear',
-                  position: 'bottom'
-              }]
+            yAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: 'Minutes Played',
+                fontSize: 14,
+                fontStyle: "italic"
+              }
+            }],
+            xAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: 'Goals Scored',
+                fontSize: 14, 
+                fontStyle: "italic"
+              }
+            }]
           },
           tooltips: {
           callbacks: {
               label: function(tooltipItem) {
                   var label = labels[tooltipItem.index];
+                  
                   return `${label}: Goals: ${tooltipItem.xLabel} Minutes: ${tooltipItem.yLabel}`
               }
-          }
+            }
+          },
+          title: {
+            display: true,
+            text: 'Minutes Played vs Goals ⚽',
+            fontSize: 14
+          },
+          legend: {
+            display: true,
+            labels: {
+                fontColor: '#666'
+            },
+            position: "bottom"
           },
           responsive: true
         }
@@ -164,8 +192,6 @@ export default {
   },
   watch: {
     league: async function (newValue) {
-        console.log(newValue)
-        //await this.clearChart()
         this.updateChart(newValue)
     }
   }
