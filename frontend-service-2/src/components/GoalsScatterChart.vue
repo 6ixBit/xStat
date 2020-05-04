@@ -1,6 +1,10 @@
 <template>
   <div class="container">
-      <scatter v-if="loaded" :chart-data="chartdata" :options="options" height="180"
+      <scatter v-if="loaded" 
+      :chart-data="chartdata" 
+      :options="options"
+      :height="chartSizeHeight"
+      :width="chartSizeWidth"
        />
   </div>
 </template>
@@ -14,6 +18,22 @@ export default {
   props : ['league'],
   components: {
     "scatter": Scatter
+  },
+  computed: {
+    chartSizeHeight(){
+      if(this.$mq === "mobile") {
+        return '700'
+      } else {
+          return '180'
+      }
+    },
+    chartSizeWidth(){
+      if(this.$mq === "mobile") {
+        return '700'
+      } else {
+          return '400'
+      }
+    }
   },
   data: () => ({
     loaded: false,

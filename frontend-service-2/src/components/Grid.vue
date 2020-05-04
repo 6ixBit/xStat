@@ -19,22 +19,22 @@
     </div>
 
 
-     <Row type="flex" justify="center">
-        <i-col span="12">
+     <Row type="flex" justify="center" class="firstRowCharts">
+        <i-col :span="getGridSpan">
           <goals-scatter :league="currentLeague"/>
         </i-col>
 
-        <i-col span="12">
+        <i-col :span="getGridSpan">
           <dribbles-scatter :league="currentLeague"/>
         </i-col>
     </Row>
 
-    <Row type="flex" justify="center">
-        <i-col span="12">
+    <Row type="flex" justify="center" class="secondRowCharts">
+        <i-col :span="getGridSpan">
           <tackles-scatter :league="currentLeague"/>
         </i-col>
 
-        <i-col span="12">
+        <i-col :span="getGridSpan">
           <passes-scatter :league="currentLeague"/>
         </i-col>
     </Row>
@@ -63,6 +63,15 @@ export default {
         currentLeague : "Premier League"
       }
     },
+    computed: {
+      getGridSpan() {
+        if(this.$mq === "mobile") {
+          return "24"
+        } else {
+          return "12"
+        }
+      }
+    },
     methods : {
       updateCharts(leagueName){
         // Assign value from select option event to a data variable so children charts can update
@@ -85,4 +94,22 @@ export default {
     justify-content: center;
     margin: 15px 10px;
   }
+
+
+  @media only screen 
+  and (min-device-width: 320px) 
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+    .firstRowCharts{
+      display: flex;
+      justify-content: center;
+      flex-direction: column
+    }
+
+     .secondRowCharts{
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+    }
+}
 </style>
