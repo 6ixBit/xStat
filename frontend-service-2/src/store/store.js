@@ -35,7 +35,8 @@ export const store = new Vuex.Store({
                     keyPasses_per90, 
                     shots_on_target_p90, 
                     assists_per90,
-                    tacklesCompleted_per90
+                    tacklesCompleted_per90,
+                    interceptions_per90
                 } = player
 
                 players.push({
@@ -45,14 +46,15 @@ export const store = new Vuex.Store({
                             keyPasses_per90, 
                             shots_on_target_p90, 
                             assists_per90,
-                            tacklesCompleted_per90
+                            tacklesCompleted_per90,
+                            interceptions_per90
                         ],
                     borderColor: dynamicColors(1)
                 })
            })
 
            return {
-            labels: ["Dribbles", "Goals", "Key Passes","Shots On Target", "Assists", "Tackles"],
+            labels: ["Dribbles", "Goals", "Key Passes","Shots On Target", "Assists", "Tackles", "Interceptions"],
             datasets: players 
            }
         }
