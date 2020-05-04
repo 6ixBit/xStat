@@ -7,7 +7,7 @@
         @on-select="addPlayer"
         placeholder="Search for a player..."
         style="width:200px">
-  
+
         <Option v-for="player in players" :value="player.player_name" :key="player.id" >{{player.player_name}} - {{player.competition}}</Option>
         </AutoComplete>
       </div>

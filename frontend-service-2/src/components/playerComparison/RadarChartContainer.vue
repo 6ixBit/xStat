@@ -1,10 +1,8 @@
 <template>
   <div>
     <div class="radarContainer">
-      <radar-chart :key="componentKey" v-if="loaded" :chart-data="formatOffensivePlayerData" :options="options"/>
+      <radar-chart v-if="loaded" :chart-data="formatOffensivePlayerData" :options="options" width='350'/>
       </div>
-    {{ formatOffensivePlayerData }}
-    key: {{ componentKey }}
   </div>
 </template>
 
@@ -31,6 +29,9 @@ export default {
     },
     formatOffensivePlayerData() {
       return this.$store.getters.formatOffensivePlayerData
+    },
+    getRandomColor() {
+      return this.$store.state.generateRandomColor 
     }
   },
   methods: {
@@ -50,6 +51,7 @@ export default {
           responsive: true,
           maintainAspectRatio: false
         }
+      
         this.loaded = true;
       } catch (error) {
         console.log(error);
@@ -61,7 +63,6 @@ export default {
       this.$store.commit("clearPlayerInfo");
       this.$store.commit("getPlayers");
 
-      // Then Update Chart with Player Info Data.
       this.updateRadarChart();
     }
   },
