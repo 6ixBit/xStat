@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-      <scatter v-if="loaded" :chartdata="chartdata" :options="options" height="180px"
+      <scatter v-if="loaded" :chart-data="chartdata" :options="options" height="180px"
        />
   </div>
 </template>
