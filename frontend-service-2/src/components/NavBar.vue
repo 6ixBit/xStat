@@ -1,5 +1,5 @@
 <template>
-    <i-menu mode="horizontal" :theme="light" :active-name='activeMenuItem'>
+    <i-menu mode="horizontal" theme="light" :active-name='activeMenuItem'>
         <MenuItem name="1" to="/">
             <Icon type="ios-stats" />
             xStat

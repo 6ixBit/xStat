@@ -22,16 +22,16 @@ export default {
   computed: {
     chartSizeHeight(){
       if(this.$mq === "mobile") {
-        return '700'
+        return 700
       } else {
-          return '180'
+          return 180
       }
     },
     chartSizeWidth(){
       if(this.$mq === "mobile") {
-        return '700'
+        return 700
       } else {
-          return '400'
+          return 400
       }
     }
   },

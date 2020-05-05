@@ -28,14 +28,6 @@ services:
             - 8082:80
         restart: always
 
-    monitor-service:
-        build: ./monitor-service
-        volumes: 
-            - ./monitor-service:/usr/src/app
-        ports:
-            - 8083:5000
-        restart: always
-
     frontend-service-2: 
         build: ./frontend-service-2
         volumes:
