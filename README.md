@@ -12,6 +12,6 @@ Data visualization platform for football player statistics using micro-services.
 ## Run 
 - Install Docker
 - Run the application: docker-compose up
-- Visit http://localhost:8080
+- Visit http://localhost:8084
 
 - Kill application: docker-compose down
