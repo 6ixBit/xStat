@@ -14,21 +14,18 @@ client = MongoClient(Config.MONGO_URL)
 db = client['xStat']
 collection = db['player_comparison_service']
 
-def get_player(player_name:str, season:str="2019-2020"):
+def get_player(player_name:str):
     """
     - Returns a document when a match for player_name is found.
     
     Arguments:
         player_name {str} -- Name of player to search.
-    
-    Keyword Arguments:
-        season {str} -- Season of player to search (default: {"2019-2020"})
-    
+        
     Returns:
         [type] -- player object 
     """    
     # Search for player in database
-    received_player = collection.find_one({"player_name": player_name})
+    received_player = collection.find_one({"player_name": player_name.strip()})
 
     # End function if player is not found
     if received_player is None:
@@ -37,6 +34,7 @@ def get_player(player_name:str, season:str="2019-2020"):
     # Remove Mongo Object ID from result
     del received_player['_id']
 
+    print(received_player) # We are fetching player.
     return received_player
 
 def search_player(first_name:str):
