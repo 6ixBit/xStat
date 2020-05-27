@@ -3,16 +3,19 @@ Data visualization platform for football player statistics using micro-services.
 
 ## Home page
 - Charts wiil update on change of league selected via drop down
+<br />
 ![](home.png)
 <br />
 
 ## Player comparison matrix
 - Add up to 2 players from any of Europes top 5 football leagues 
+<br />
 ![](chart.png)
 <br />
 
 ## Whole number stats for selected players
 - Side by side panel view of plotted players for a better grasp of their stats
+<br />
 ![](rawStats.png)
 <br />
 
