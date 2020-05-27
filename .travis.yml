@@ -10,8 +10,8 @@ before_script:
    
 script:
     - docker-compose build
-    - docker-compose run general-service sh -c "python3 -m unittest"
-    - docker-compose run player-comparison-service sh -c "python3 -m unittest"
+    // - docker-compose run general-service sh -c "python3 -m unittest"
+    // - docker-compose run player-comparison-service sh -c "python3 -m unittest"
 
 
     
