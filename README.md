@@ -1,12 +1,14 @@
 # xStat [![Build Status](https://travis-ci.org/6ixBit/xStat.svg?branch=master)](https://travis-ci.org/6ixBit/xStat)
 Data visualization platform for football player statistics using micro-services.
 
+## Home page
 ![](home.png)
 
+## Player comparison matrix
 ![](chart.png)
+
+## Whole number stats for selected players
 ![](rawStats.png)
-
-
 
 ## Stack
 - General service: Python (Flask)
