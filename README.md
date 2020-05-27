@@ -2,13 +2,18 @@
 Data visualization platform for football player statistics using micro-services.
 
 ## Home page
+- Charts wiil update on change of league selected via drop down
 ![](home.png)
+<br />
 
 ## Player comparison matrix
+- 
 ![](chart.png)
+<br />
 
 ## Whole number stats for selected players
 ![](rawStats.png)
+<br />
 
 ## Stack
 - General service: Python (Flask)
